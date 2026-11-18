@@ -1,0 +1,673 @@
+<title>Painel ASG Investe Piauí</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap">
+<style>
+/* Layout: faixa azul da agencia no topo, abas fixas; cada aba e uma tela de trabalho — resumo em cima, detalhe embaixo. */
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --surface2:#e7ecf4; --ink:#16233b; --muted:#566279; --line:#d3dae6;
+  --brand:#3a5a8d; --brand-deep:#1f3a66; --on-brand:#ffffff; --on-brand-soft:#d6e0f1;
+  --accent:#3a5a8d; --accent-ink:#ffffff; --accent2:#d98a1f;
+  --amb:#2a7a4b; --soc:#a85f00; --gov:#3a5a8d;
+  --ok:#1f7a4a; --warn:#a86a00; --bad:#b3372f; --nodata:#6b7780;
+  --c1:#3a5a8d; --c2:#d98a1f; --c3:#2a7a4b; --c4:#8a4fa3; --c5:#c0483f; --c6:#2a94a8; --c7:#7a8499;
+  --display:"Montserrat","Segoe UI",system-ui,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0d1320; --surface:#151d2e; --surface2:#1e2940; --ink:#e6ecf7; --muted:#9daac2; --line:#2a3650;
+  --brand:#2b4675; --brand-deep:#14233f; --on-brand:#ffffff; --on-brand-soft:#c5d3ec;
+  --accent:#8fb0ea; --accent-ink:#0d1a33; --accent2:#f0b25a;
+  --amb:#6fd19a; --soc:#f0b560; --gov:#8fb0ea;
+  --ok:#5fd193; --warn:#eab85a; --bad:#f08a80; --nodata:#93a1a8;
+  --c1:#8fb0ea; --c2:#f0b25a; --c3:#6fd19a; --c4:#c79be0; --c5:#f08a80; --c6:#6fd0e0; --c7:#a3adc2; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0d1320; --surface:#151d2e; --surface2:#1e2940; --ink:#e6ecf7; --muted:#9daac2; --line:#2a3650;
+  --brand:#2b4675; --brand-deep:#14233f; --on-brand:#ffffff; --on-brand-soft:#c5d3ec;
+  --accent:#8fb0ea; --accent-ink:#0d1a33; --accent2:#f0b25a;
+  --amb:#6fd19a; --soc:#f0b560; --gov:#8fb0ea;
+  --ok:#5fd193; --warn:#eab85a; --bad:#f08a80; --nodata:#93a1a8;
+  --c1:#8fb0ea; --c2:#f0b25a; --c3:#6fd19a; --c4:#c79be0; --c5:#f08a80; --c6:#6fd0e0; --c7:#a3adc2; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--brand-deep)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.faixa{background:var(--brand-deep);color:var(--on-brand)}
+.brand{display:flex;align-items:center;gap:14px;padding-block:10px}
+.brand img{height:62px;width:auto;border-radius:6px;background:#fff;padding:3px;flex:none}
+.brand h1{font-family:var(--display);font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.brand span{color:var(--on-brand-soft);font-size:12.5px;display:block}
+.abas{background:var(--surface);border-bottom:1px solid var(--line)}
+nav{display:flex;gap:2px;overflow-x:auto}
+nav a{flex:none;padding:10px 12px;color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;border-bottom:3px solid transparent;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+main{padding-block:22px 48px;display:flex;flex-direction:column;gap:24px}
+.aviso{background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--muted)}
+.aviso b{color:var(--ink)}
+h2{font-family:var(--display);font-size:23px;margin:0;letter-spacing:-.01em;text-wrap:balance;font-weight:700}
+h3{font-family:var(--display);font-size:15.5px;margin:0 0 10px;font-weight:700}
+.lead{color:var(--muted);max-width:70ch;margin:6px 0 0}
+.nota{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.sec{display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.g2>*,.g3>*,.g4>*{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.kpi .v{font-family:var(--display);font-size:28px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--muted);font-size:13px;margin-top:4px}
+/* capa */
+.capa{background:var(--brand);color:var(--on-brand);border-radius:10px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center}
+.capa .k{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--on-brand-soft)}
+.capa h2{font-size:26px;margin-top:4px}
+.capa p{color:var(--on-brand-soft);margin:8px 0 0;max-width:62ch}
+.capa .ring span{color:var(--on-brand-soft)}
+.capa .ring .rv{fill:var(--on-brand)}
+.temas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.tema{border:2px solid var(--brand);border-radius:10px;padding:16px;background:var(--surface);text-decoration:none;color:inherit;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.tema:hover{background:var(--surface2)}
+.tema .cod{font-family:var(--display);font-weight:800;font-size:30px;color:var(--accent);line-height:1}
+.tema b{font-family:var(--display);font-size:16.5px;display:block;margin-top:4px;line-height:1.25}
+.tema p{margin:6px 0 0;font-size:13px;color:var(--muted)}
+.lente{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--surface);text-decoration:none;color:inherit;display:block}
+.lente:hover{border-color:var(--accent)}
+.lente b{font-family:var(--display);font-size:16px}
+.lente p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.fichas{display:flex;flex-wrap:wrap;gap:8px}
+.ficha{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 12px;font-size:13px;min-width:0}
+.ficha b{display:block;font-family:var(--display);font-size:14px}
+.ficha span{color:var(--muted);font-size:12.5px}
+/* indicadores */
+.ind{display:flex;flex-direction:column;gap:6px}
+.ind .head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ind .id{font-family:var(--display);font-weight:700;font-size:12px;color:var(--muted);letter-spacing:.04em}
+.ind .nome{font-weight:600;font-size:14px;line-height:1.3}
+.ind .v{font-family:var(--display);font-size:25px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15}
+.ind .v small{font-family:var(--body);font-size:13px;font-weight:500;color:var(--muted)}
+.ind .obs{font-size:12.5px;color:var(--muted)}
+.ind details{font-size:12.5px;color:var(--muted)}
+.ind summary{cursor:pointer;color:var(--accent);font-weight:500}
+.prog{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.prog i.w{background:var(--warn)} .prog i.b{background:var(--bad)} .prog i.o{background:var(--ok)}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap;letter-spacing:.02em}
+.chip.amb{color:var(--amb)} .chip.soc{color:var(--soc)} .chip.gov{color:var(--gov)}
+.chip.calc{color:var(--ok)} .chip.demo{color:var(--warn)} .chip.nd{color:var(--nodata)} .chip.bad{color:var(--bad)}
+/* graficos */
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(90px,170px) 1fr auto;gap:10px;align-items:center;font-size:13px}
+.bar .t{height:12px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.bar .f{height:100%;background:var(--accent);border-radius:3px}
+.bar .n{font-variant-numeric:tabular-nums;font-weight:600;text-align:right;min-width:60px}
+.bar .lb{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cols{display:flex;align-items:flex-end;gap:12px;height:180px;padding-top:4px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0;gap:4px;font-size:12.5px}
+.col i{display:block;width:100%;max-width:72px;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px}
+.col b{font-variant-numeric:tabular-nums}
+.col span{color:var(--muted)}
+.ring{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12.5px;color:var(--muted);text-align:center}
+.rv{font-family:var(--display);font-weight:800;font-size:26px;fill:var(--ink)}
+.rings{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-around}
+.donut{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.leg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px;flex:1;min-width:150px}
+.leg li{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center}
+.leg i{width:12px;height:12px;border-radius:3px;display:block}
+.leg b{font-variant-numeric:tabular-nums;font-weight:600}
+.legh{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin-top:8px}
+.legh span{display:inline-flex;align-items:center;gap:6px}
+.legh i{width:10px;height:10px;border-radius:50%;display:block}
+.pilha{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--surface2)}
+.pilha i{display:block;height:100%}
+svg text{fill:var(--muted);font-size:11px;font-family:var(--body)}
+.alertas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.alertas li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+/* sequencia */
+.fluxo{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.etapa{flex:1 1 170px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.etapa .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.etapa .t{font-family:var(--display);font-weight:700;font-size:15px;margin:2px 0 6px;line-height:1.25}
+.etapa p{margin:0;font-size:12.5px;color:var(--muted)}
+.etapa.fim{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.etapa.fim .k,.etapa.fim p{color:var(--on-brand-soft)}
+.seta{flex:none;align-self:center;color:var(--muted);font-size:18px}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+.btns button,.bt{font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btns button[aria-pressed="true"],.bt.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.bt.perigo{color:var(--bad);border-color:var(--bad)}
+.bt.mini{padding:3px 9px;font-size:12px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.tw.alto{max-height:460px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{position:sticky;top:0;background:var(--surface2);font-weight:600;font-size:12px;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.filtros{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.cp{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:500;min-width:0}
+select,input[type=text],input[type=number],input[type=date]{font:inherit;font-size:14px;padding:7px 9px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.form input,.form select{width:100%}
+.msg{font-size:13px;font-weight:600;color:var(--ok);min-height:20px}
+.msg.e{color:var(--bad)}
+.pilar-t{display:flex;align-items:center;gap:8px;margin-top:4px}
+.pilar-t h3{margin:0}
+.rodape{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:620px){ h2{font-size:20px} .seta{display:none} .bar{grid-template-columns:minmax(70px,110px) 1fr auto} .capa{grid-template-columns:1fr} .capa h2{font-size:22px} .brand h1{font-size:16px} .brand img{height:52px} }
+@media (prefers-reduced-motion:no-preference){ .prog i,.bar .f,.col i{transition:width .3s,height .3s} }
+</style>
+
+<header class="top">
+ <div class="faixa"><div class="wrap brand">
+  <img src="/*LOGO*/" alt="Logotipo da Investe Piauí">
+  <div><h1>Painel ASG · Investe Piauí</h1><span>Projeto acadêmico do iCEV (Ciência de Dados 2026.2, Grupo 2). Não é canal oficial da agência.</span></div>
+ </div></div>
+ <div class="abas"><div class="wrap"><nav id="nav" aria-label="Seções do painel">
+  <a href="#geral">Visão geral</a><a href="#temas">Temas T1 e T14</a><a href="#sequencia">Do plano ao painel</a><a href="#investe">ASG Investe</a><a href="#empresas">ASG Empresas</a><a href="#editar">Editar dados</a><a href="#dados">Qualidade dos dados</a>
+ </nav></div></div>
+</header>
+<div class="wrap"><main id="app"></main></div>
+
+<script id="dados" type="application/json">/*DATA*/</script>
+<script>
+"use strict";
+// =====================================================================
+// 1. DADOS — a base original vem embutida; edicoes ficam salvas neste navegador
+// =====================================================================
+const ORIG = JSON.parse(document.getElementById("dados").textContent);
+const CHAVE = "painelASG.grupo2.v2";
+const clone = o => JSON.parse(JSON.stringify(o));
+let D = clone(ORIG), W = {amb:25, soc:25, gov:50}, EDITADO = false;
+try { const s = JSON.parse(localStorage.getItem(CHAVE) || "null"); if (s && s.D && s.D.P) { D = s.D; W = s.W || W; EDITADO = true; } } catch (e) {}
+const salvar = () => { EDITADO = true; try { localStorage.setItem(CHAVE, JSON.stringify({D, W})); } catch (e) {} };
+const TOTAL_MUN_PI = 224; // municipios do Piaui (IBGE)
+
+// =====================================================================
+// 2. UTILITARIOS
+// =====================================================================
+const nf = (v,d=0)=> v==null||isNaN(v) ? "—" : Number(v).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct = (v,d=1)=> v==null||isNaN(v) ? "—" : nf(v*100,d)+"%";
+const bi = v => "R$ "+nf(v/1e9,2)+" bi";
+const mi = v => nf(v/1e6,0);
+const sum = (a,f)=> a.reduce((s,x)=>s+(Number(f(x))||0),0);
+const div = (a,b)=> b ? a/b : null;
+const med = (a,f)=> a.length ? sum(a,f)/a.length : null;
+const dias = (a,b)=> Math.round((new Date(b)-new Date(a))/864e5);
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const grupo = (a,k)=> a.reduce((m,x)=>{(m[k(x)] ||= []).push(x);return m},{});
+const conta = (a,k,v="Sim")=> a.filter(x=>x[k]===v).length;
+const ult = id => D.R.filter(x=>x.id===id).sort((a,b)=>b.ano-a.ano)[0] || {};
+const ST = ["Implantado","Em implantação","Em estruturação"];
+const SETORES = ["Energia","Agro","Turismo","Mineração","ZPE","Porto","Multissetorial"];
+const corSetor = s => `var(--c${SETORES.indexOf(s)%7+1})`;
+
+// =====================================================================
+// 3. CALCULO — todas as contas em um lugar so; o resultado fica em M
+// =====================================================================
+function calcular(){
+  const P=D.P, imp=P.filter(p=>p.st===ST[0]), emi=P.filter(p=>p.st===ST[1]), est=P.filter(p=>p.st===ST[2]);
+  const prev=sum(P,p=>p.ip), real=sum(P,p=>p.ir);
+  const resp=D.X.filter(x=>x.dias!=null), dentro=resp.filter(x=>x.dias<=x.sla);
+  const semar=resp.filter(x=>x.org==="SEMAR"), semarOk=semar.filter(x=>x.dias<=x.sla);
+  const muns=grupo(P.filter(p=>p.cid),p=>p.cid), munInv=Object.entries(muns).map(([m,a])=>[m,sum(a,p=>p.ip)]).sort((a,b)=>b[1]-a[1]);
+  const s25=D.S.filter(s=>String(s.m).startsWith("2025")), s26=D.S.filter(s=>String(s.m).startsWith("2026"));
+  const ciclo=P.filter(p=>p.da&&p.dc);
+  // temas T1 e T14
+  const ddOk=D.G.filter(g=>g.dd==="Sim"), alto=ddOk.filter(g=>g.risco==="Alto"), altoPend=alto.filter(g=>g.pend==="Sim");
+  const conc=D.N.filter(n=>n.dias!=null), concOk=conc.filter(n=>n.dias<=n.meta);
+  const test=D.I.filter(i=>i.test==="Sim"), efet=test.filter(i=>i.res==="Efetivo");
+  return {P,imp,emi,est,prev,real,resp,dentro,semar,semarOk,munInv,s25,s26,ddOk,alto,altoPend,conc,concOk,test,efet,
+    conv:div(imp.length,P.length), exec:div(real,prev),
+    ciclo:med(ciclo,p=>dias(p.da,p.dc)),
+    sla:div(dentro.length,resp.length), prazo:med(resp,x=>x.dias), pend:D.X.length-resp.length,
+    contr:div(conta(D.C,"asg","SIM"),D.C.length), nContr:D.C.length, asg:conta(D.C,"asg","SIM"),
+    comun:div(new Set(D.K.map(k=>k.prj)).size,P.length),
+    ger:sum(imp,p=>p.eg), previstos:sum(emi,p=>p.ep), indir:sum(P,p=>p.ei),
+    gerPrev:div(sum(imp,p=>p.eg),sum(imp,p=>p.ep)+sum(emi,p=>p.ep)),
+    nMun:Object.keys(muns).length, cobertura:Object.keys(muns).length/TOTAL_MUN_PI,
+    top5:div(sum(munInv.slice(0,5),x=>x[1]),prev),
+    energia:div(sum(P.filter(p=>p.s==="Energia"),p=>p.ip),prev),
+    missao:div(conta(P,"miss"),P.length), estr:div(conta(P,"estr"),P.length),
+    empEstr:div(D.E.filter(e=>e.pais!=="Brasil").length,D.E.length), nPaises:new Set(D.E.map(e=>e.pais)).size,
+    kwh25:med(s25,s=>s.kwh), kwh26:med(s26,s=>s.kwh), agua26:med(s26,s=>s.agua), res26:med(s26,s=>s.res),
+    slaAmb:div(semarOk.length,semar.length),
+    trein:div(conta(D.T,"trein"),D.T.length), codigo:div(conta(D.T,"cod"),D.T.length), conflito:div(conta(D.T,"conf"),D.T.length),
+    dd:div(ddOk.length,D.G.length), decl:div(conta(D.G,"decl"),D.G.length), altoPendPct:div(altoPend.length,alto.length),
+    anti:div(conta(D.C,"anti"),D.C.length), forn:div(conta(D.C,"forn"),D.C.length),
+    denPrazo:div(concOk.length,conc.length), denMedio:med(conc,n=>n.dias), denAbertas:D.N.length-conc.length,
+    ctrlTest:div(test.length,D.I.length), ctrlEfet:div(efet.length,test.length) };
+}
+
+// =====================================================================
+// 4. CATALOGO — compromissos, temas materiais e indicadores
+// =====================================================================
+// Compromissos: redacao do grupo a partir da missao da agencia. Trocar pelo texto oficial quando disponivel.
+const COMP = [
+ {id:"C1",t:"Atrair investimento estratégico e diversificar a economia"},
+ {id:"C2",t:"Gerar emprego e renda"},
+ {id:"C3",t:"Liderar a transição energética"},
+ {id:"C4",t:"Levar desenvolvimento a todos os territórios"},
+ {id:"C5",t:"Gestão íntegra, transparente e ágil"},
+ {id:"C6",t:"Inclusão e equidade"} ];
+// Temas da Matriz de Materialidade atribuidos ao Grupo 2
+const TEMAS = [
+ {id:"T1", t:"Governança ética e compliance", d:"As pessoas da agência conhecem as regras, assinam o código de conduta e os contratos carregam as cláusulas certas."},
+ {id:"T14",t:"Integridade e combate à corrupção", d:"Controles internos: quem entra na carteira é analisado, os relatos são apurados no prazo e os controles são testados."} ];
+// o = origem do valor: calc (calculado da base) | demo (medicao de demonstracao) | nd (sem dado ainda)
+// m = meta 2030 proposta pelo grupo (a pactuar) ; dir = 1 quanto maior melhor, -1 quanto menor melhor ; mat = tema material
+function catalogo(M){ return [
+ // ---- Temas do grupo: T1 Governanca etica e compliance ----
+ {id:"T1.1",tema:"inv",pilar:"gov",mat:"T1",c:"C5",nome:"Colaboradores treinados em integridade",v:M.trein,f:pct,o:"calc",fonte:"COLABORADORES_INTEGRIDADE",form:"Colaboradores com treinamento de integridade no ano ÷ total de colaboradores",obs:conta(D.T,"trein")+" de "+D.T.length+" colaboradores",ctrl:"Lista de presença ou certificado do treinamento",m:1,dir:1},
+ {id:"T1.2",tema:"inv",pilar:"gov",mat:"T1",c:"C5",nome:"Adesão ao código de conduta",v:M.codigo,f:pct,o:"calc",fonte:"COLABORADORES_INTEGRIDADE",form:"Colaboradores com termo do código de conduta assinado ÷ total",obs:conta(D.T,"cod")+" de "+D.T.length+" termos assinados",ctrl:"Termo assinado arquivado pelo RH",m:1,dir:1},
+ {id:"T1.3",tema:"inv",pilar:"gov",mat:"T1",c:"C5",nome:"Declarações de conflito de interesses entregues",v:M.conflito,f:pct,o:"calc",fonte:"COLABORADORES_INTEGRIDADE",form:"Colaboradores com declaração anual entregue ÷ total",obs:conta(D.T,"conf")+" de "+D.T.length+" declarações",ctrl:"Declaração anual obrigatória, renovada todo ano",m:1,dir:1},
+ {id:"T1.4",tema:"inv",pilar:"gov",mat:"T1",c:"C5",nome:"Contratos da agência com cláusula ASG",v:M.contr,f:pct,o:"calc",fonte:"CONTRATOS",form:"Contratos com cláusula ASG ÷ total de contratos",obs:M.asg+" de "+M.nContr+" contratos",ctrl:"Conferência do jurídico/compliance na assinatura",m:1,dir:1},
+ {id:"T1.5",tema:"inv",pilar:"gov",mat:"T1",c:"C5",nome:"Fornecedores avaliados antes de contratar",v:M.forn,f:pct,o:"calc",fonte:"CONTRATOS_INTEGRIDADE",form:"Contratos com fornecedor avaliado quanto à integridade ÷ total de contratos",obs:conta(D.C,"forn")+" de "+D.C.length+" contratos",ctrl:"Ficha de avaliação anexada ao processo de contratação",m:.9,dir:1},
+ // ---- Temas do grupo: T14 Integridade e combate a corrupcao (controles internos) ----
+ {id:"T14.1",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Empresas da carteira com due diligence de integridade",v:M.dd,f:pct,o:"calc",fonte:"DUE_DILIGENCE",form:"Empresas com due diligence realizada ÷ total de empresas da carteira",obs:M.ddOk.length+" de "+D.G.length+" empresas analisadas",ctrl:"Análise concluída antes do protocolo de intenções",m:1,dir:1},
+ {id:"T14.2",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Empresas de risco alto com pendência aberta",v:M.altoPendPct,f:pct,o:"calc",fonte:"DUE_DILIGENCE",form:"Empresas de risco alto com pendência aberta ÷ empresas de risco alto",obs:M.altoPend.length+" de "+M.alto.length+" empresas de risco alto",ctrl:"Pendência de risco alto tratada antes de qualquer benefício",m:.05,dir:-1},
+ {id:"T14.3",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Empresas com declaração anticorrupção assinada",v:M.decl,f:pct,o:"calc",fonte:"DUE_DILIGENCE",form:"Empresas com declaração anticorrupção assinada ÷ total de empresas",obs:conta(D.G,"decl")+" de "+D.G.length+" empresas",ctrl:"Declaração assinada pelo representante legal",m:1,dir:1},
+ {id:"T14.4",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Contratos com cláusula anticorrupção",v:M.anti,f:pct,o:"calc",fonte:"CONTRATOS_INTEGRIDADE",form:"Contratos com cláusula anticorrupção ÷ total de contratos",obs:conta(D.C,"anti")+" de "+D.C.length+" contratos",ctrl:"Cláusula padrão obrigatória na minuta (Lei 12.846/2013)",m:1,dir:1},
+ {id:"T14.5",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Relatos do canal de denúncias apurados no prazo",v:M.denPrazo,f:pct,o:"calc",fonte:"CANAL_DENUNCIAS",form:"Relatos concluídos dentro do prazo-meta ÷ relatos concluídos",obs:M.concOk.length+" de "+M.conc.length+" concluídos; "+M.denAbertas+" em apuração",ctrl:"Prazo calculado pelas datas; sem identificação de pessoas (LGPD)",m:.9,dir:1},
+ {id:"T14.6",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Prazo médio de apuração dos relatos",v:M.denMedio,f:v=>nf(v)+" dias",o:"calc",fonte:"CANAL_DENUNCIAS",form:"Média de (data de conclusão − data do registro)",ctrl:"Calculado automaticamente",m:20,dir:-1},
+ {id:"T14.7",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Controles internos testados no ano",v:M.ctrlTest,f:pct,o:"calc",fonte:"CONTROLES_INTERNOS",form:"Controles testados no ano ÷ total de controles mapeados",obs:M.test.length+" de "+D.I.length+" controles",ctrl:"Plano anual de testes aprovado pela diretoria",m:1,dir:1},
+ {id:"T14.8",tema:"inv",pilar:"gov",mat:"T14",c:"C5",nome:"Controles internos efetivos",v:M.ctrlEfet,f:pct,o:"calc",fonte:"CONTROLES_INTERNOS",form:"Controles com resultado Efetivo ÷ controles testados",obs:M.efet.length+" de "+M.test.length+" testados",ctrl:"Controle com falha gera plano de ação com prazo",m:.9,dir:1},
+ // ---- ASG Investe: demais indicadores da agencia ----
+ {id:"IG1",tema:"inv",pilar:"gov",c:"C1",nome:"Taxa de conversão da carteira",v:M.conv,f:pct,o:"calc",fonte:"Projetos",form:"Projetos implantados ÷ total de projetos",obs:M.imp.length+" de "+M.P.length+" projetos",ctrl:"Status só da lista institucional",m:.55,dir:1},
+ {id:"IG2",tema:"inv",pilar:"gov",c:"C1",nome:"Execução financeira da carteira",v:M.exec,f:pct,o:"calc",fonte:"Projetos",form:"Investimento realizado ÷ investimento previsto",obs:bi(M.real)+" de "+bi(M.prev),ctrl:"Valor realizado com comprovação da empresa",m:.7,dir:1},
+ {id:"IG3",tema:"inv",pilar:"gov",c:"C5",nome:"Tempo médio entre atração e captação",v:M.ciclo,f:v=>nf(v)+" dias",o:"calc",fonte:"Projetos",form:"Média de (Data de Captação − Data de Atração)",ctrl:"Datas obrigatórias no cadastro do projeto",m:100,dir:-1},
+ {id:"IG4",tema:"inv",pilar:"gov",c:"C5",nome:"Demandas externas respondidas dentro do SLA",v:M.sla,f:pct,o:"calc",fonte:"Processos_Externos",form:"Demandas dentro do SLA ÷ demandas respondidas (SEMAR, INTERPI, Equatorial)",obs:M.dentro.length+" de "+M.resp.length+" respondidas; "+M.pend+" sem resposta",ctrl:"Status calculado pelas datas, nunca digitado",m:.85,dir:1},
+ {id:"IG5",tema:"inv",pilar:"gov",c:"C5",nome:"Prazo médio de resposta dos órgãos",v:M.prazo,f:v=>nf(v)+" dias",o:"calc",fonte:"Processos_Externos",form:"Média de (Data Resposta − Data Solicitação)",ctrl:"Calculado automaticamente",m:30,dir:-1},
+ {id:"IG7",tema:"inv",pilar:"gov",c:"C5",nome:"Projetos com ação de comunicação registrada",v:M.comun,f:pct,o:"calc",fonte:"Comunicação",form:"Projetos distintos na aba Comunicação ÷ total de projetos",ctrl:"Divulgação só do que não é sigiloso (LGPD e sigilo comercial)",m:.5,dir:1},
+ {id:"IG8",tema:"inv",pilar:"gov",c:"C5",nome:"Prazo médio de resposta do e-SIC",v:ult("G03").val,f:v=>nf(v,1)+" dias",o:"demo",fonte:"Portal da Transparência / e-SIC",form:"Média de (data da resposta − data do pedido)",ctrl:"Lei de Acesso à Informação (Lei 12.527/2011)"},
+ {id:"IG9",tema:"inv",pilar:"gov",c:"C1",nome:"Projetos captados em missão institucional",v:M.missao,f:pct,o:"calc",fonte:"Projetos",form:"Projetos com 'Captada por Missão' = Sim ÷ total",ctrl:"Campo Sim/Não obrigatório"},
+ {id:"IG10",tema:"inv",pilar:"gov",c:"C1",nome:"Projetos com investimento estrangeiro",v:M.estr,f:pct,o:"calc",fonte:"Projetos + Empresas",form:"Projetos com 'Investimento Estrangeiro' = Sim ÷ total",obs:M.nPaises+" países de origem na carteira",ctrl:"País de origem padronizado na aba Empresas"},
+ {id:"IS1",tema:"inv",pilar:"soc",c:"C2",nome:"Empregos gerados × previstos",v:M.gerPrev,f:pct,o:"calc",fonte:"Projetos",form:"Empregos gerados (implantados) ÷ empregos diretos previstos (implantados + em implantação)",obs:nf(M.ger)+" gerados; "+nf(M.previstos)+" ainda previstos",ctrl:"Conferência anual com o Novo CAGED por município",m:.6,dir:1},
+ {id:"IS2",tema:"inv",pilar:"soc",c:"C4",nome:"Cobertura territorial da carteira",v:M.cobertura,f:pct,o:"calc",fonte:"CidadeProjeto",form:"Municípios com pelo menos um projeto ÷ 224 municípios do Piauí",obs:M.nMun+" municípios com projeto",ctrl:"Nome do município conforme aba CodigoCidade",m:.22,dir:1},
+ {id:"IS3",tema:"inv",pilar:"soc",c:"C4",nome:"Concentração do investimento nos 5 maiores municípios",v:M.top5,f:pct,o:"calc",fonte:"Projetos + CidadeProjeto",form:"Investimento previsto dos 5 municípios com maior valor ÷ total",ctrl:"Recalcular a cada novo projeto captado",m:.4,dir:-1},
+ {id:"IS4",tema:"inv",pilar:"soc",c:"C6",nome:"Mulheres em cargos de liderança na agência",v:ult("S03").val,f:pct,o:"demo",fonte:"RH da agência",form:"Mulheres em liderança ÷ total de cargos de liderança",obs:"Meta definida no trabalho: 45%",ctrl:"Quadro de pessoal do RH, sem dado pessoal identificável (LGPD)",m:.5,dir:1},
+ {id:"IS5",tema:"inv",pilar:"soc",c:"C6",nome:"Empreendedoras atendidas por mês (Investe Nelas)",v:ult("S02").val,f:v=>nf(v),o:"demo",fonte:"Registros do programa Investe Nelas",form:"Contagem de atendimentos no mês",ctrl:"Lista de presença/atendimento do programa"},
+ {id:"IA1",tema:"inv",pilar:"amb",c:"C3",nome:"Energia renovável no investimento da carteira",v:M.energia,f:pct,o:"calc",fonte:"Projetos",form:"Investimento previsto do setor Energia ÷ investimento previsto total",ctrl:"Classificação de setor conforme lista oficial 'Setor Investe'",m:.7,dir:1},
+ {id:"IA2",tema:"inv",pilar:"amb",c:"C5",nome:"Consumo médio mensal de energia da sede",v:M.kwh26,f:v=>nf(v)+" kWh",o:"calc",fonte:"CONSUMO_SEDE",form:"Média de kwh_energia dos meses de 2026",obs:"2025: "+nf(M.kwh25)+" kWh/mês",ctrl:"Conta de energia arquivada como evidência do mês",m:5500,dir:-1},
+ {id:"IA3",tema:"inv",pilar:"amb",c:"C5",nome:"Consumo médio mensal de água da sede",v:M.agua26,f:v=>nf(v,1)+" m³",o:"calc",fonte:"CONSUMO_SEDE",form:"Média de m3_agua dos meses de 2026",ctrl:"Conta de água arquivada como evidência do mês"},
+ {id:"IA4",tema:"inv",pilar:"amb",c:"C5",nome:"Resíduos gerados pela sede por mês",v:M.res26,f:v=>nf(v)+" kg",o:"calc",fonte:"CONSUMO_SEDE",form:"Média de kg_residuos dos meses de 2026",ctrl:"Registro de pesagem/coleta"},
+ {id:"IA5",tema:"inv",pilar:"amb",c:"C5",nome:"Demandas ambientais (SEMAR) respondidas no prazo",v:M.slaAmb,f:pct,o:"calc",fonte:"Processos_Externos",form:"Demandas à SEMAR dentro do SLA ÷ demandas à SEMAR respondidas",obs:M.semarOk.length+" de "+M.semar.length+" respondidas",ctrl:"Datas de solicitação e resposta obrigatórias",m:.85,dir:1},
+ // ---- ASG Empresas: os empreendimentos atraidos ----
+ {id:"EA1",tema:"emp",pilar:"amb",c:"C3",nome:"Potência renovável outorgada no Piauí",v:ult("A01").val,f:v=>nf(v)+" MW",o:"demo",fonte:"ANEEL — SIGA",form:"Soma da potência outorgada das usinas do PI",obs:"Entra o número oficial quando o CSV do SIGA for carregado",ctrl:"CSV oficial filtrado por UF = PI"},
+ {id:"EA2",tema:"emp",pilar:"amb",c:"C3",nome:"Projetos com licença ambiental vigente",v:null,o:"nd",fonte:"Questionário ASG às empresas + SEMAR",form:"Projetos com licença válida ÷ projetos que exigem licença",ctrl:"Cópia da licença anexada"},
+ {id:"EA3",tema:"emp",pilar:"amb",c:"C3",nome:"Emissões evitadas pelos projetos de energia",v:null,o:"nd",fonte:"Questionário ASG às empresas",form:"tCO₂e evitadas por ano, declaradas pela empresa",ctrl:"Metodologia de cálculo informada pela empresa"},
+ {id:"ES1",tema:"emp",pilar:"soc",c:"C2",nome:"Empregos diretos gerados pelos projetos implantados",v:M.ger,f:v=>nf(v),o:"calc",fonte:"Projetos",form:"Soma de Empregos Gerados dos projetos implantados",ctrl:"Reconcilia com o total oficial (teste T10)"},
+ {id:"ES2",tema:"emp",pilar:"soc",c:"C2",nome:"Empregos indiretos previstos",v:M.indir,f:v=>nf(v),o:"calc",fonte:"Projetos",form:"Soma de Empregos Indiretos",ctrl:"Inteiro não negativo"},
+ {id:"ES3",tema:"emp",pilar:"soc",c:"C2",nome:"Mão de obra local nos projetos",v:null,o:"nd",fonte:"Questionário ASG às empresas",form:"Trabalhadores residentes no município ÷ total de trabalhadores",ctrl:"Declaração da empresa, conferida por amostragem"},
+ {id:"ES4",tema:"emp",pilar:"soc",c:"C6",nome:"Mulheres no quadro das empresas",v:null,o:"nd",fonte:"Questionário ASG às empresas",form:"Mulheres ÷ total de trabalhadores do projeto",ctrl:"Dado agregado, sem identificação pessoal (LGPD)"},
+ {id:"EG1",tema:"emp",pilar:"gov",c:"C1",nome:"Empresas de origem estrangeira na carteira",v:M.empEstr,f:pct,o:"calc",fonte:"Empresas",form:"Empresas com país de origem ≠ Brasil ÷ total de empresas",ctrl:"País padronizado"},
+ {id:"EG2",tema:"emp",pilar:"gov",c:"C5",nome:"Empresas com código de conduta e canal de denúncia",v:null,o:"nd",fonte:"Questionário ASG às empresas",form:"Empresas que comprovam os dois itens ÷ total",ctrl:"Documento anexado"},
+];}
+const PIL = {amb:"Ambiental",soc:"Social",gov:"Governança"};
+const ORG = {calc:["calc","Calculado da base"],demo:["demo","Demonstração"],nd:["nd","Sem dado ainda"]};
+
+// SCORE: nota de 0 a 100 de cada indicador com meta = quanto da meta ja foi alcancado
+//   quanto maior melhor: valor / meta      quanto menor melhor: meta / valor      (limitado a 100)
+const nota = i => (i.v==null||i.m==null||isNaN(i.v)) ? null : Math.max(0,Math.min(1, i.dir>0 ? i.v/i.m : (i.v<=0 ? 1 : i.m/i.v)))*100;
+const media = l => { const n=l.map(i=>i.sc).filter(x=>x!=null); return n.length ? n.reduce((a,b)=>a+b,0)/n.length : null; };
+let M, IND, SC;
+function recalcular(){
+  M = calcular(); IND = catalogo(M); IND.forEach(i=>i.sc=nota(i));
+  const p = k => media(IND.filter(i=>i.pilar===k));
+  SC = {amb:p("amb"), soc:p("soc"), gov:p("gov"), T1:media(IND.filter(i=>i.mat==="T1")), T14:media(IND.filter(i=>i.mat==="T14"))};
+  const ws = ["amb","soc","gov"].filter(k=>SC[k]!=null), tw = sum(ws,k=>W[k]);
+  SC.geral = tw ? sum(ws,k=>SC[k]*W[k])/tw : null;   // Score ASG = media ponderada dos tres pilares
+}
+recalcular();
+
+// =====================================================================
+// 5. COMPONENTES VISUAIS (devolvem HTML/SVG em texto)
+// =====================================================================
+const faixa = s => s==null ? "" : s>=80 ? "o" : s>=50 ? "w" : "b";
+const bars = (rows,fmt,teto,cor)=> { const mx=teto||Math.max(...rows.map(r=>r[1]),1e-9);
+  return `<div class="bars">${rows.map(r=>`<div class="bar"><span class="lb" title="${esc(r[0])}">${esc(r[0])}</span><div class="t"><div class="f" style="width:${Math.max(1,Math.min(100,r[1]/mx*100)).toFixed(1)}%;${r[2]?`background:${r[2]}`:cor?`background:${cor}`:""}"></div></div><span class="n">${fmt(r[1])}</span></div>`).join("")}</div>`; };
+const cols = (rows,fmt)=> { const mx=Math.max(...rows.map(r=>r[1]),1e-9);
+  return `<div class="cols">${rows.map(r=>`<div class="col"><b>${fmt(r[1])}</b><i style="height:${(r[1]/mx*78).toFixed(1)}%"></i><span>${esc(r[0])}</span></div>`).join("")}</div>`; };
+const ring = (v,lab,cor="var(--accent)",sz=112)=> { const r=44,c=2*Math.PI*r,p=v==null?0:v/100;
+  return `<div class="ring"><svg viewBox="0 0 112 112" width="${sz}" height="${sz}" role="img" aria-label="${esc(lab)}: ${v==null?"sem dado":nf(v)+" de 100"}"><circle cx="56" cy="56" r="${r}" fill="none" stroke="var(--surface2)" stroke-opacity=".55" stroke-width="11"/><circle cx="56" cy="56" r="${r}" fill="none" stroke="${cor}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${(c*p).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 56 56)"/><text x="56" y="65" text-anchor="middle" class="rv">${v==null?"—":nf(v)}</text></svg><span>${esc(lab)}</span></div>`; };
+const donut = (rows,centro,nome)=> { const tot=sum(rows,r=>r[1])||1,r=40,c=2*Math.PI*r; let acc=0;
+  const cor=(x,i)=>x[2]||`var(--c${i%7+1})`;
+  const segs=rows.map((x,i)=>{const len=x[1]/tot*c, s=`<circle cx="56" cy="56" r="${r}" fill="none" stroke="${cor(x,i)}" stroke-width="16" stroke-dasharray="${len.toFixed(2)} ${(c-len).toFixed(2)}" stroke-dashoffset="${(-acc).toFixed(2)}" transform="rotate(-90 56 56)"/>`; acc+=len; return s}).join("");
+  return `<div class="donut"><svg viewBox="0 0 112 112" width="150" height="150" role="img" aria-label="${esc(nome)}">${segs}<text x="56" y="64" text-anchor="middle" class="rv" style="font-size:22px">${centro}</text></svg><ul class="leg">${rows.map((x,i)=>`<li><i style="background:${cor(x,i)}"></i><span>${esc(x[0])}</span><b>${nf(x[1])} · ${pct(x[1]/tot,0)}</b></li>`).join("")}</ul></div>`; };
+const pilha = (rows,fmt)=> { const tot=sum(rows,r=>r[1])||1;
+  return `<div class="pilha" role="img" aria-label="${rows.map(r=>r[0]+": "+fmt(r[1])).join("; ")}">${rows.map((r,i)=>`<i style="width:${(r[1]/tot*100).toFixed(2)}%;background:${r[2]||`var(--c${i+1})`}"></i>`).join("")}</div><div class="legh">${rows.map((r,i)=>`<span><i style="background:${r[2]||`var(--c${i+1})`}"></i>${esc(r[0])}: <b style="color:var(--ink)">${fmt(r[1])}</b> (${pct(r[1]/tot,0)})</span>`).join("")}</div>`; };
+function linha(S,campo,nome){ if(S.length<2) return `<p class="nota">Dados insuficientes para o gráfico.</p>`;
+  const w=560,h=170,pl=46,pb=22,pt=10, vs=S.map(s=>Number(s[campo])||0), mn=Math.min(...vs)*.95, mx=Math.max(...vs)*1.05||1;
+  const x=i=>pl+i*(w-pl-10)/(S.length-1), y=v=>pt+(mx-v)/((mx-mn)||1)*(h-pt-pb);
+  const pts=vs.map((v,i)=>x(i).toFixed(1)+","+y(v).toFixed(1)).join(" "), tk=[mn,(mn+mx)/2,mx];
+  return `<div style="overflow-x:auto"><svg viewBox="0 0 ${w} ${h}" width="100%" style="min-width:420px" role="img" aria-label="${esc(nome)}">
+   ${tk.map(v=>`<line x1="${pl}" x2="${w-10}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${nf(v)}</text>`).join("")}
+   <polygon points="${x(0)},${h-pb} ${pts} ${x(S.length-1)},${h-pb}" fill="var(--accent)" fill-opacity=".12"/>
+   <polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2"/>
+   <circle cx="${x(S.length-1)}" cy="${y(vs.at(-1))}" r="4" fill="var(--accent)"/>
+   ${S.map((s,i)=> i%4===0||i===S.length-1 ? `<text x="${x(i)}" y="${h-6}" text-anchor="${i===S.length-1?"end":"middle"}">${esc(String(s.m).slice(5))}/${esc(String(s.m).slice(2,4))}</text>`:"").join("")}
+  </svg></div>`; }
+function dispersao(){ const L=D.P.filter(p=>p.ep>0&&p.ip>0); if(!L.length) return `<p class="nota">Sem projetos com emprego previsto.</p>`;
+  const w=560,h=250,pl=46,pb=30,pt=10, lx=v=>Math.log10(v/1e6), x0=Math.floor(Math.min(...L.map(p=>lx(p.ip)))), x1=Math.ceil(Math.max(...L.map(p=>lx(p.ip)))), my=Math.max(...L.map(p=>p.ep))*1.08;
+  const x=v=>pl+(lx(v)-x0)/((x1-x0)||1)*(w-pl-12), y=v=>pt+(my-v)/my*(h-pt-pb), tx=[]; for(let k=x0;k<=x1;k++) tx.push(k);
+  return `<div style="overflow-x:auto"><svg viewBox="0 0 ${w} ${h}" width="100%" style="min-width:420px" role="img" aria-label="Cada ponto é um projeto: investimento previsto no eixo horizontal, empregos diretos previstos no vertical">
+   ${[0,my/2,my].map(v=>`<line x1="${pl}" x2="${w-12}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${nf(v)}</text>`).join("")}
+   ${tx.map(k=>`<text x="${x(10**k*1e6)}" y="${h-10}" text-anchor="middle">R$ ${nf(10**k)} mi</text>`).join("")}
+   ${L.map(p=>`<circle cx="${x(p.ip).toFixed(1)}" cy="${y(p.ep).toFixed(1)}" r="5" fill="${corSetor(p.s)}" fill-opacity=".7" stroke="var(--surface)" stroke-width="1"><title>${esc(p.n)} · ${esc(p.s)} · R$ ${mi(p.ip)} mi · ${nf(p.ep)} empregos</title></circle>`).join("")}
+  </svg></div><div class="legh">${SETORES.map(s=>`<span><i style="background:${corSetor(s)}"></i>${s}</span>`).join("")}</div>`; }
+const card = i => `<div class="panel ind">
+  <div class="head"><span class="id">${i.id}</span><span class="chip ${ORG[i.o][0]}">${ORG[i.o][1]}</span></div>
+  <div class="nome">${esc(i.nome)}</div>
+  <div class="v">${i.v==null?'<small>a coletar</small>':i.f(i.v)}</div>
+  ${i.sc!=null?`<div class="prog" title="Nota ${nf(i.sc)} de 100"><i class="${faixa(i.sc)}" style="width:${i.sc.toFixed(0)}%"></i></div><div class="obs">Nota ${nf(i.sc)}/100 · meta 2030: ${i.f(i.m)}</div>`:""}
+  ${i.obs?`<div class="obs">${esc(i.obs)}</div>`:""}
+  <details><summary>Como é calculado</summary><p style="margin:6px 0 0"><b>Fórmula:</b> ${esc(i.form)}<br><b>Fonte:</b> ${esc(i.fonte)}<br><b>Controle:</b> ${esc(i.ctrl)}<br><b>Compromisso:</b> ${i.c} · ${esc(COMP.find(c=>c.id===i.c).t)}${i.mat?`<br><b>Tema material:</b> ${i.mat}`:""}</p></details>
+</div>`;
+const blocoPilar = (tema,p)=> { const l=IND.filter(i=>i.tema===tema&&i.pilar===p&&!i.mat); if(!l.length) return "";
+  return `<div class="sec"><div class="pilar-t"><span class="chip ${p}">${PIL[p]}</span><h3>${l.length} indicadores</h3></div><div class="grid g4">${l.map(card).join("")}</div></div>`; };
+const AVISO = () => `<div class="aviso"><b>${EDITADO?"Base alterada por você neste navegador.":"Base de estudo sintética."}</b> ${EDITADO?"Os números abaixo já refletem as suas edições. Para voltar ao ponto de partida, use Restaurar base original na aba Editar dados.":"O detalhe por empresa, projeto e pessoa é simulado e calibrado para fechar com os totais oficiais do Governo do Piauí (120 empreendimentos, R$ 44,7 bi). Nenhum registro representa uma empresa ou pessoa real."}</div>`;
+// leitura automatica: frases geradas a partir dos dados
+function leitura(){ const por=SETORES.map(s=>[s,sum(D.P.filter(p=>p.s===s),p=>p.ip)]).sort((a,b)=>b[1]-a[1])[0];
+  const piores=IND.filter(i=>i.sc!=null).sort((a,b)=>a.sc-b.sc).slice(0,4), melhores=IND.filter(i=>i.sc!=null).sort((a,b)=>b.sc-a.sc).slice(0,2);
+  const f=[];
+  if(por&&M.prev) f.push(["Carteira",`${por[0]} lidera com ${pct(por[1]/M.prev,0)} do investimento previsto; ${M.imp.length} de ${M.P.length} projetos já estão implantados.`]);
+  if(M.altoPend.length) f.push(["Atenção",`${M.altoPend.length} empresa(s) de risco alto seguem com pendência de integridade aberta.`]);
+  if(M.denAbertas) f.push(["Atenção",`${M.denAbertas} relato(s) do canal de denúncias ainda em apuração; prazo médio dos concluídos: ${nf(M.denMedio)} dias.`]);
+  if(D.I.length-M.test.length) f.push(["Atenção",`${D.I.length-M.test.length} de ${D.I.length} controles internos ainda não foram testados neste ano.`]);
+  piores.forEach(i=>f.push(["Mais longe da meta",`${i.id} ${i.nome}: ${i.f(i.v)} para uma meta de ${i.f(i.m)} (nota ${nf(i.sc)}).`]));
+  melhores.forEach(i=>f.push(["Destaque",`${i.id} ${i.nome}: ${i.f(i.v)} (nota ${nf(i.sc)}).`]));
+  return `<ul class="alertas">${f.map(x=>`<li><span class="chip ${x[0]==="Destaque"?"calc":x[0]==="Carteira"?"gov":x[0]==="Atenção"?"bad":"demo"}">${x[0]}</span><span>${esc(x[1])}</span></li>`).join("")}</ul>`; }
+
+// =====================================================================
+// 6. TELAS — cada funcao devolve o HTML de uma aba
+// =====================================================================
+const UI = {c:"todos", fs:"", ft:"", tab:"P", msg:"", erro:false, edit:null, confirma:false};
+const telas = {
+ geral(){
+  const P=D.P, porSt=ST.map((s,i)=>[s,P.filter(p=>p.st===s).length,`var(--c${[3,1,7][i]})`]);
+  const porSet=SETORES.map(s=>[s,sum(P.filter(p=>p.s===s),p=>p.ip),corSetor(s)]).sort((a,b)=>b[1]-a[1]);
+  const anos=Object.entries(grupo(P.filter(p=>p.da),p=>p.da.slice(0,4))).sort().map(([a,l])=>[a,sum(l,p=>p.ip)]);
+  const n=t=>IND.filter(i=>i.tema===t).length, calc=IND.filter(i=>i.o==="calc").length;
+  return `
+  <div class="capa"><div><div class="k">Grupo 2 · Matriz de Materialidade</div><h2>Governança ética, compliance e integridade na Investe Piauí</h2>
+    <p>Painel de indicadores ASG da agência de atração de investimentos do Piauí. ${IND.length} indicadores, ${calc} calculados direto dos dados, com foco nos dois temas do grupo.</p></div>
+    ${ring(SC.geral,"Score ASG (0 a 100)","var(--on-brand)",132)}</div>
+  <div class="sec"><div><h2>Temas do grupo</h2><p class="lead">Os dois temas da Matriz de Materialidade que o Grupo 2 acompanha, com a nota de cada um frente às metas propostas para 2030.</p></div>
+   <div class="temas">${TEMAS.map(t=>`<a class="tema" href="#temas"><div><span class="cod">${t.id}</span><b>${esc(t.t)}</b><p>${esc(t.d)}</p><p><b style="display:inline;font-size:13px;color:var(--accent)">${IND.filter(i=>i.mat===t.id).length} indicadores · ver detalhes →</b></p></div>${ring(SC[t.id],"Nota do tema")}</a>`).join("")}</div></div>
+  ${AVISO()}
+  <div class="grid g2">
+   <div class="panel"><h3>Score ASG por pilar</h3><div class="rings">${ring(SC.amb,"Ambiental","var(--amb)")}${ring(SC.soc,"Social","var(--soc)")}${ring(SC.gov,"Governança","var(--gov)")}</div><p class="nota">Cada nota mostra quanto das metas de 2030 já foi alcançado. O score geral pondera Ambiental ${W.amb}, Social ${W.soc} e Governança ${W.gov}.</p></div>
+   <div class="panel"><h3>Leitura automática dos dados</h3>${leitura()}</div>
+  </div>
+  <div class="sec"><div><h2>A carteira da agência</h2><p class="lead">O que a Investe Piauí atraiu e quanto disso já virou obra e emprego.</p></div>
+   <div class="grid g4">
+    <div class="panel kpi"><div class="v">${P.length}</div><div class="l">projetos na carteira</div></div>
+    <div class="panel kpi"><div class="v">${bi(M.prev)}</div><div class="l">investimento previsto</div></div>
+    <div class="panel kpi"><div class="v">${pct(M.exec)}</div><div class="l">já executado (${bi(M.real)})</div></div>
+    <div class="panel kpi"><div class="v">${nf(M.ger)}</div><div class="l">empregos gerados · ${nf(M.previstos)} previstos</div></div>
+   </div></div>
+  <div class="grid g3">
+   <div class="panel"><h3>Projetos por status</h3>${donut(porSt,P.length,"Projetos por status")}</div>
+   <div class="panel"><h3>Investimento atraído por ano (R$ bi)</h3>${cols(anos,v=>nf(v/1e9,1))}</div>
+   <div class="panel"><h3>Investimento por setor (R$ bi)</h3>${bars(porSet,v=>nf(v/1e9,2))}</div>
+  </div>
+  <div class="sec"><div><h2>Frentes da Investe Piauí</h2><p class="lead">Os setores estratégicos em que a agência organiza o acompanhamento dos projetos e os programas citados no diagnóstico do grupo.</p></div>
+   <div class="fichas">${SETORES.map(s=>{const a=P.filter(p=>p.s===s);return `<div class="ficha"><b style="color:${corSetor(s)}">${s}</b><span>${a.length} projetos · ${bi(sum(a,p=>p.ip))}</span></div>`}).join("")}
+    <div class="ficha"><b>Investe Nelas</b><span>lideranças femininas</span></div><div class="ficha"><b>Soft landing</b><span>acolhimento de empresas de fora</span></div><div class="ficha"><b>Hub e PIT</b><span>inovação e tecnologia</span></div></div></div>
+  <div class="sec"><div><h2>Dois olhares sobre ASG</h2></div>
+   <div class="grid g2">
+    <a class="lente" href="#investe"><b>ASG Investe →</b><p>${n("inv")} indicadores da própria agência: integridade, desempenho da atração, prazos, contratos, consumo da sede e equidade.</p></a>
+    <a class="lente" href="#empresas"><b>ASG Empresas →</b><p>${n("emp")} indicadores dos empreendimentos: energia limpa, empregos, origem do capital e o que ainda precisa ser coletado das empresas.</p></a>
+   </div></div>`;
+ },
+ temas(){
+  const cat=Object.entries(grupo(D.N,n=>n.cat)).map(([c,l])=>[c,l.length]).sort((a,b)=>b[1]-a[1]);
+  const risco=[["Baixo",conta(D.G,"risco","Baixo"),"var(--c3)"],["Médio",conta(D.G,"risco","Médio"),"var(--c2)"],["Alto",conta(D.G,"risco","Alto"),"var(--c5)"],["Sem análise",D.G.length-M.ddOk.length,"var(--c7)"]];
+  const ctr=[["Efetivo",M.efet.length,"var(--c3)"],["Com falha",M.test.length-M.efet.length,"var(--c5)"],["Não testado",D.I.length-M.test.length,"var(--c7)"]];
+  const area=Object.entries(grupo(D.T,t=>t.area)).map(([a,l])=>[a,conta(l,"trein")/l.length]).sort((a,b)=>a[1]-b[1]);
+  const falhas=D.I.filter(i=>i.res==="Com falha"||i.test!=="Sim");
+  const bloco=t=>`<div class="sec"><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">${ring(SC[t.id],"Nota do tema")}<div style="flex:1;min-width:240px"><h2>${t.id} · ${esc(t.t)}</h2><p class="lead">${esc(t.d)}</p></div></div><div class="grid g4">${IND.filter(i=>i.mat===t.id).map(card).join("")}</div></div>`;
+  return `${AVISO()}${bloco(TEMAS[0])}
+  <div class="grid g2">
+   <div class="panel"><h3>Treinamento de integridade por área</h3>${bars(area,v=>pct(v,0),1)}<p class="nota">Áreas no topo da lista são as primeiras a convocar.</p></div>
+   <div class="panel"><h3>Contratos: três cláusulas e avaliações</h3>${bars([["Cláusula ASG",M.contr||0],["Cláusula anticorrupção",M.anti||0],["Fornecedor avaliado",M.forn||0]],v=>pct(v,0),1)}<p class="nota">Base: ${D.C.length} contratos da agência.</p></div>
+  </div>
+  ${bloco(TEMAS[1])}
+  <div class="grid g3">
+   <div class="panel"><h3>Risco de integridade das empresas</h3>${donut(risco,D.G.length,"Empresas por nível de risco de integridade")}</div>
+   <div class="panel"><h3>Situação dos controles internos</h3>${donut(ctr,D.I.length,"Controles internos por situação")}</div>
+   <div class="panel"><h3>Relatos por categoria</h3>${bars(cat,v=>nf(v))}<p class="nota">${D.N.length} relatos no canal; ${M.denAbertas} em apuração.</p></div>
+  </div>
+  <div class="sec"><h3>Controles que pedem ação</h3>
+   <div class="tw"><table><thead><tr><th>Controle</th><th>Processo</th><th>Situação</th><th>Plano de ação no prazo</th></tr></thead><tbody>
+   ${falhas.map(i=>`<tr><td><b>${esc(i.id)}</b> ${esc(i.nome)}</td><td>${esc(i.proc)}</td><td><span class="chip ${i.res==="Com falha"?"bad":"nd"}">${i.res==="Com falha"?"Com falha":"Não testado"}</span></td><td>${esc(i.plano||"—")}</td></tr>`).join("")||`<tr><td colspan="4">Todos os controles foram testados e estão efetivos.</td></tr>`}
+   </tbody></table></div></div>`;
+ },
+ sequencia(){
+  const lista=IND.filter(i=> UI.c==="todos" || i.c===UI.c), metas=IND.filter(i=>i.m!=null&&i.v!=null), anos=[2027,2028,2029,2030];
+  return `<div class="sec"><div><h2>Do plano de governo ao painel</h2><p class="lead">Nenhum indicador nasce solto. Cada um responde a um compromisso de governo, passa por um controle de compliance e tem meta no plano estratégico de quatro anos. É a sequência desenhada em sala.</p></div>
+   <div class="fluxo">
+    <div class="etapa"><div class="k">Nível político</div><div class="t">Plano de Governo</div><p>As prioridades assumidas pela gestão estadual.</p></div><span class="seta" aria-hidden="true">→</span>
+    <div class="etapa"><div class="k">O que se promete</div><div class="t">Compromissos de Governo</div><p>${COMP.length} compromissos ligados à atuação da agência.</p></div><span class="seta" aria-hidden="true">→</span>
+    <div class="etapa"><div class="k">Como se mede</div><div class="t">Pacote de Indicadores</div><p>${IND.length} indicadores, cada um com fórmula e fonte.</p></div><span class="seta" aria-hidden="true">→</span>
+    <div class="etapa"><div class="k">Como se garante</div><div class="t">Plano de Compliance</div><p>Um controle por indicador: evidência, regra e sigilo.</p></div><span class="seta" aria-hidden="true">→</span>
+    <div class="etapa fim"><div class="k">Aonde se quer chegar</div><div class="t">Plano Estratégico ASG · 4 anos</div><p>Metas de 2027 a 2030, nos temas ASG Investe e ASG Empresas.</p></div>
+   </div>
+   <div class="aviso"><b>O que é do grupo e o que é oficial.</b> A redação dos compromissos foi escrita pelo grupo a partir da missão da agência e deve ser trocada pelo texto oficial do Plano de Governo quando a Investe Piauí o indicar. As metas de 2030 são proposta do grupo, a pactuar com a agência.</div></div>
+  <div class="sec"><h3>Compromissos → indicadores → controles</h3>
+   <div class="btns" role="group" aria-label="Filtrar por compromisso">
+    <button data-c="todos" aria-pressed="${UI.c==="todos"}">Todos (${IND.length})</button>
+    ${COMP.map(c=>`<button data-c="${c.id}" aria-pressed="${UI.c===c.id}">${c.id} · ${esc(c.t)} (${IND.filter(i=>i.c===c.id).length})</button>`).join("")}
+   </div>
+   <div class="tw alto"><table><thead><tr><th>Compromisso</th><th>Indicador</th><th>Tema</th><th>Pilar</th><th class="num">Valor atual</th><th>Controle de compliance</th></tr></thead><tbody>
+    ${lista.map(i=>`<tr><td>${i.c}</td><td><b>${i.id}</b> ${esc(i.nome)}</td><td>${i.mat||(i.tema==="inv"?"Investe":"Empresas")}</td><td><span class="chip ${i.pilar}">${PIL[i.pilar]}</span></td><td class="num">${i.v==null?'<span class="chip nd">a coletar</span>':i.f(i.v)}</td><td>${esc(i.ctrl)}</td></tr>`).join("")}
+   </tbody></table></div></div>
+  <div class="sec"><div><h3>Plano estratégico ASG: caminho até 2030</h3><p class="lead" style="margin:0">Ponto de partida calculado da base e trajetória linear até a meta proposta. A nota é quanto da meta já foi alcançado.</p></div>
+   <div class="tw"><table><thead><tr><th>Indicador</th><th class="num">Hoje</th>${anos.map(a=>`<th class="num">${a}</th>`).join("")}<th class="num">Nota</th><th>Sentido</th></tr></thead><tbody>
+    ${metas.map(i=>`<tr><td><b>${i.id}</b> ${esc(i.nome)}</td><td class="num">${i.f(i.v)}</td>${anos.map((a,k)=>`<td class="num">${i.f(i.v+(i.m-i.v)*(k+1)/4)}</td>`).join("")}<td class="num">${nf(i.sc)}</td><td>${i.dir>0?"quanto maior, melhor":"quanto menor, melhor"}</td></tr>`).join("")}
+   </tbody></table></div></div>`;
+ },
+ investe(){
+  const org=Object.entries(grupo(M.resp,x=>x.org)).map(([o,a])=>[o,a.filter(x=>x.dias<=x.sla).length/a.length]);
+  const pipe=ST.map((s,i)=>[s,sum(D.P.filter(p=>p.st===s),p=>p.ip),`var(--c${[3,1,7][i]})`]);
+  return `${AVISO()}<div class="sec"><div><h2>ASG Investe: a agência por dentro</h2><p class="lead">Indicadores do desempenho e da conduta da própria Investe Piauí. Os indicadores de integridade (T1 e T14) têm aba própria: <a href="#temas" style="color:var(--accent);font-weight:600">Temas T1 e T14</a>.</p></div>
+   <div class="grid g4">
+    <div class="panel kpi"><div class="v">${pct(M.conv)}</div><div class="l">da carteira já implantada</div></div>
+    <div class="panel kpi"><div class="v">${nf(M.ciclo)} dias</div><div class="l">da atração à captação</div></div>
+    <div class="panel kpi"><div class="v">${pct(M.sla)}</div><div class="l">das demandas externas no prazo</div></div>
+    <div class="panel kpi"><div class="v">${nf(SC.gov)}</div><div class="l">nota do pilar Governança (0 a 100)</div></div>
+   </div></div>
+  <div class="panel"><h3>Carteira por estágio, em investimento previsto</h3>${pilha(pipe,bi)}</div>
+  ${blocoPilar("inv","gov")}
+  <div class="grid g2">
+   <div class="panel"><h3>Demandas no prazo, por órgão</h3>${bars(org,v=>pct(v,0),1)}<p class="nota">Mostra onde o projeto trava fora da agência. ${M.pend} demandas ainda sem resposta.</p></div>
+   <div class="panel"><h3>Energia da sede, kWh por mês</h3>${linha(D.S,"kwh","Consumo mensal de energia da sede")}</div>
+  </div>
+  ${blocoPilar("inv","soc")}${blocoPilar("inv","amb")}`;
+ },
+ empresas(){
+  const P=D.P, L=P.filter(p=>(!UI.fs||p.s===UI.fs)&&(!UI.ft||p.st===UI.ft));
+  const linhas=SETORES.map(s=>{const a=P.filter(p=>p.s===s), i=a.filter(p=>p.st===ST[0]);
+    return {s,n:a.length,ip:sum(a,p=>p.ip),ex:div(sum(a,p=>p.ir),sum(a,p=>p.ip)),ep:sum(a,p=>p.ep),eg:sum(a,p=>p.eg),epm: sum(i,p=>p.ip)? sum(i,p=>p.eg)/(sum(i,p=>p.ip)/1e6):null}});
+  const paises=Object.entries(grupo(D.E,e=>e.pais)).map(([p,l])=>[p,l.length]).sort((a,b)=>b[1]-a[1]);
+  return `${AVISO()}<div class="sec"><div><h2>ASG Empresas: os empreendimentos atraídos</h2><p class="lead">O que os projetos entregam para o estado em energia limpa, emprego e território. Onde a base ainda não tem o dado, o painel mostra o que precisa ser pedido às empresas.</p></div></div>
+  ${blocoPilar("emp","amb")}${blocoPilar("emp","soc")}${blocoPilar("emp","gov")}
+  <div class="grid g2">
+   <div class="panel"><h3>Investimento × empregos previstos, por projeto</h3>${dispersao()}<p class="nota">Eixo horizontal em escala logarítmica. Pontos altos à esquerda empregam muito com pouco investimento.</p></div>
+   <div class="panel"><h3>Empresas por país de origem</h3>${bars(paises,v=>nf(v))}</div>
+  </div>
+  <div class="sec"><h3>Resultado por setor</h3>
+   <div class="tw"><table><thead><tr><th>Setor</th><th class="num">Projetos</th><th class="num">Previsto (R$ mi)</th><th class="num">Execução</th><th class="num">Empregos previstos</th><th class="num">Empregos gerados</th><th class="num">Empregos por R$ mi*</th></tr></thead><tbody>
+   ${linhas.map(r=>`<tr><td>${r.s}</td><td class="num">${r.n}</td><td class="num">${mi(r.ip)}</td><td class="num">${pct(r.ex,0)}</td><td class="num">${nf(r.ep)}</td><td class="num">${nf(r.eg)}</td><td class="num">${r.epm==null?"—":nf(r.epm,2)}</td></tr>`).join("")}
+   </tbody></table></div><p class="nota" style="margin:0">* Empregos gerados por milhão de reais investido, só nos projetos implantados.</p></div>
+  <div class="grid g2">
+   <div class="panel"><h3>Municípios que mais recebem investimento (R$ mi)</h3>${bars(M.munInv.slice(0,8),v=>mi(v),0,"var(--accent2)")}</div>
+   <div class="panel"><h3>Empregos gerados por setor</h3>${bars(linhas.map(r=>[r.s,r.eg,corSetor(r.s)]).sort((a,b)=>b[1]-a[1]),v=>nf(v))}</div>
+  </div>
+  <div class="sec"><h3>Projetos da carteira</h3>
+   <div class="filtros">
+    <label class="cp" for="f-setor">Setor<select id="f-setor"><option value="">Todos</option>${SETORES.map(s=>`<option ${s===UI.fs?"selected":""}>${s}</option>`).join("")}</select></label>
+    <label class="cp" for="f-status">Status<select id="f-status"><option value="">Todos</option>${ST.map(s=>`<option ${s===UI.ft?"selected":""}>${s}</option>`).join("")}</select></label>
+    <span style="font-size:13px;color:var(--muted)">${L.length} projetos · ${bi(sum(L,p=>p.ip))} · ${nf(sum(L,p=>p.eg))} empregos gerados</span>
+   </div>
+   <div class="tw alto"><table><thead><tr><th>Código</th><th>Projeto</th><th>Setor</th><th>Município</th><th>Status</th><th class="num">Previsto (R$ mi)</th><th class="num">Execução</th><th class="num">Empregos prev.</th><th class="num">Gerados</th></tr></thead><tbody>
+   ${L.map(p=>`<tr><td>${esc(p.c)}</td><td>${esc(p.n)}</td><td>${esc(p.s)}</td><td>${esc(p.cid)}</td><td>${esc(p.st)}</td><td class="num">${mi(p.ip)}</td><td class="num">${pct(div(p.ir,p.ip),0)}</td><td class="num">${p.ep==null?"—":nf(p.ep)}</td><td class="num">${p.eg==null?"—":nf(p.eg)}</td></tr>`).join("")}
+   </tbody></table></div></div>`;
+ },
+ editar(){
+  const e=ESQ[UI.tab], L=D[UI.tab], reg=UI.edit!=null?L[UI.edit]:{};
+  const campo=([k,lab,tp,op])=>{const v=reg[k]??"", id="ed-"+k;
+    return `<label class="cp" for="${id}">${lab}${tp==="sel"?`<select id="${id}">${op.map(o=>`<option ${String(v)===o?"selected":""}>${o}</option>`).join("")}</select>`:`<input id="${id}" type="${tp==="num"?"text":tp}" ${tp==="num"?'inputmode="decimal"':""} value="${esc(v)}">`}</label>`};
+  return `<div class="sec"><div><h2>Editar dados</h2><p class="lead">Inclua, altere ou exclua registros. A cada mudança o painel recalcula os ${IND.length} indicadores, as notas e todos os gráficos. As edições ficam salvas só neste navegador; a base publicada não muda.</p></div>
+   <div class="grid g4">
+    <div class="panel kpi"><div class="v">${nf(SC.geral)}</div><div class="l">Score ASG agora${UI.antes!=null&&Math.abs(UI.antes-SC.geral)>=.05?` · antes ${nf(UI.antes,1)} → ${nf(SC.geral,1)}`:""}</div></div>
+    <div class="panel kpi"><div class="v">${nf(SC.T1)}</div><div class="l">nota do tema T1</div></div>
+    <div class="panel kpi"><div class="v">${nf(SC.T14)}</div><div class="l">nota do tema T14</div></div>
+    <div class="panel kpi"><div class="v" style="font-size:19px">${EDITADO?"Base alterada":"Base original"}</div><div class="l">${EDITADO?"salva neste navegador":"nenhuma edição feita"}</div></div>
+   </div></div>
+  <div class="sec"><h3>1. Escolha a tabela</h3>
+   <div class="btns" role="group" aria-label="Tabela a editar">${Object.entries(ESQ).map(([k,x])=>`<button data-tab="${k}" aria-pressed="${UI.tab===k}">${x.t} (${D[k].length})</button>`).join("")}</div></div>
+  <div class="sec"><h3>2. ${UI.edit!=null?"Alterar registro":"Novo registro"} em ${e.t}</h3>
+   <form id="f-ed" class="panel"><div class="form">${e.f.map(campo).join("")}</div>
+    <div class="btns" style="margin-top:12px"><button type="submit" class="bt pri">${UI.edit!=null?"Salvar alteração":"Adicionar registro"}</button>${UI.edit!=null?`<button type="button" class="bt" data-acao="cancelar">Cancelar</button>`:""}</div>
+    <p class="msg ${UI.erro?"e":""}" role="status">${esc(UI.msg)}</p></form></div>
+  <div class="sec"><h3>3. Registros de ${e.t}</h3>
+   <div class="tw alto"><table><thead><tr><th></th>${e.f.map(f=>`<th>${f[1]}</th>`).join("")}</tr></thead><tbody>
+   ${L.map((r,i)=>`<tr><td style="white-space:nowrap"><button class="bt mini" data-ed="${i}">Editar</button> <button class="bt mini perigo" data-del="${i}">Excluir</button></td>${e.f.map(f=>`<td>${esc(r[f[0]]??"—")}</td>`).join("")}</tr>`).reverse().join("")||`<tr><td colspan="${e.f.length+1}">Tabela vazia.</td></tr>`}
+   </tbody></table></div><p class="nota" style="margin:0">Os registros mais recentes aparecem primeiro.</p></div>
+  <div class="grid g2">
+   <div class="panel"><h3>Importar e exportar</h3>
+    <div class="btns"><button class="bt" data-acao="exportar">Exportar base (JSON)</button><label class="bt" style="cursor:pointer">Importar base (JSON)<input type="file" id="imp-json" accept=".json,application/json" hidden></label><label class="bt" style="cursor:pointer">Importar CSV em ${e.t}<input type="file" id="imp-csv" accept=".csv,text/csv" hidden></label></div>
+    <p class="nota">O CSV deve ter na primeira linha estes nomes de coluna: <b>${e.f.map(f=>f[0]).join("; ")}</b>. Separador ponto e vírgula ou vírgula. As linhas são acrescentadas à tabela.</p>
+    <div class="btns" style="margin-top:6px">${UI.confirma?`<button class="bt perigo" data-acao="restaurar-sim">Confirmar: apagar minhas edições</button><button class="bt" data-acao="restaurar-nao">Manter</button>`:`<button class="bt perigo" data-acao="restaurar">Restaurar base original</button>`}</div></div>
+   <div class="panel"><h3>Pesos do Score ASG</h3>
+    <div class="form">${["amb","soc","gov"].map(k=>`<label class="cp" for="w-${k}">${PIL[k]}<input id="w-${k}" type="number" min="0" max="100" step="5" value="${W[k]}"></label>`).join("")}</div>
+    <p class="nota">O score geral é a média dos três pilares ponderada por estes pesos. O padrão dá peso maior à Governança porque os temas do grupo (T1 e T14) são desse pilar.</p></div>
+  </div>`;
+ },
+ dados(){
+  const P=D.P, s=(st,f)=>sum(P.filter(p=>p.st===st),f), MI=1e6, ids=P.map(p=>p.c), emp=new Set(D.E.map(e=>e.c)), ct=new Set(D.C.map(c=>c.id));
+  const T=[
+   ["T01","Total de projetos na carteira",120,P.length],
+   ["T02","Projetos implantados",47,M.imp.length],["T03","Projetos em implantação",44,M.emi.length],["T04","Projetos em estruturação",29,M.est.length],
+   ["T05","Investimento previsto total (R$ mi)",44700,M.prev/MI],
+   ["T06","Previsto — implantados (R$ mi)",11870,s(ST[0],p=>p.ip)/MI],["T07","Previsto — em implantação (R$ mi)",23370,s(ST[1],p=>p.ip)/MI],["T08","Previsto — em estruturação (R$ mi)",9460,s(ST[2],p=>p.ip)/MI],
+   ["T09","Realizado — implantados (R$ mi)",11870,s(ST[0],p=>p.ir)/MI],
+   ["T10","Empregos gerados — implantados",10500,M.ger],["T11","Empregos previstos — em implantação",25200,M.previstos],
+   ["T12","Projetos sem município",0,P.filter(p=>!p.cid).length],
+   ["T13","Códigos de projeto duplicados",0,ids.length-new Set(ids).size],
+   ["T14","Projetos apontando para empresa inexistente",0,P.filter(p=>!emp.has(p.e)).length],
+   ["T15","Projetos com realizado maior que o previsto",0,P.filter(p=>p.ir>p.ip).length],
+   ["T16","Due diligence de empresa fora da carteira",0,D.G.filter(g=>!emp.has(g.e)).length],
+   ["T17","Empresas da carteira sem registro de due diligence",0,D.E.filter(e=>!D.G.some(g=>g.e===e.c)).length],
+   ["T18","Controles testados sem resultado informado",0,D.I.filter(i=>i.test==="Sim"&&!i.res).length],
+   ["T19","Relatos concluídos com prazo negativo",0,D.N.filter(n=>n.dias!=null&&n.dias<0).length],
+   ["T20","Contratos com código duplicado",0,D.C.length-ct.size],
+  ];
+  const ok=T.filter(t=>Math.abs(t[2]-t[3])<.01).length, cont=k=>IND.filter(i=>i.o===k).length;
+  return `<div class="sec"><div><h2>Qualidade dos dados</h2><p class="lead">Os testes rodam no navegador toda vez que o painel abre ou um dado é editado. Os onze primeiros conferem a carteira com os totais oficiais divulgados pelo Governo do Piauí em dezembro de 2025; os demais conferem a estrutura das tabelas.</p></div>
+   ${EDITADO?`<div class="aviso"><b>Base alterada por você.</b> Se um teste de T01 a T11 aparecer em ERRO, é porque as suas edições mudaram os totais da carteira em relação ao número oficial.</div>`:""}
+   <div class="grid g4">
+    <div class="panel kpi"><div class="v">${ok}/${T.length}</div><div class="l">testes aprovados</div></div>
+    <div class="panel kpi"><div class="v">${cont("calc")}</div><div class="l">indicadores calculados da base</div></div>
+    <div class="panel kpi"><div class="v">${cont("demo")}</div><div class="l">com medição de demonstração</div></div>
+    <div class="panel kpi"><div class="v">${cont("nd")}</div><div class="l">aguardando dado das empresas</div></div>
+   </div>
+   <div class="tw"><table><thead><tr><th>Teste</th><th>O que confere</th><th class="num">Esperado</th><th class="num">Obtido</th><th>Resultado</th></tr></thead><tbody>
+   ${T.map(t=>{const o=Math.abs(t[2]-t[3])<.01;return `<tr><td>${t[0]}</td><td>${t[1]}</td><td class="num">${nf(t[2])}</td><td class="num">${nf(t[3])}</td><td><span class="chip ${o?"calc":"bad"}">${o?"OK":"ERRO"}</span></td></tr>`}).join("")}
+   </tbody></table></div></div>
+  <div class="sec"><h3>De onde vem cada dado</h3>
+   <div class="tw"><table><thead><tr><th>Tabela</th><th class="num">Registros</th><th>Origem hoje</th><th>O que falta para virar dado real</th></tr></thead><tbody>
+    <tr><td>Projetos + CidadeProjeto</td><td class="num">${P.length}</td><td>Sintético calibrado</td><td>Cadastro real da Investe Piauí, sob termo de confidencialidade</td></tr>
+    <tr><td>Empresas</td><td class="num">${D.E.length}</td><td>Sintético</td><td>Cadastro real; CNPJ fica fora da versão pública</td></tr>
+    <tr><td>Processos_Externos</td><td class="num">${D.X.length}</td><td>Sintético</td><td>Registro das demandas à SEMAR, INTERPI e Equatorial</td></tr>
+    <tr><td>CONTRATOS + CONTRATOS_INTEGRIDADE</td><td class="num">${D.C.length}</td><td>Sintético</td><td>Lista do jurídico/compliance</td></tr>
+    <tr><td>DUE_DILIGENCE</td><td class="num">${D.G.length}</td><td>Sintético</td><td>Análises de integridade das empresas</td></tr>
+    <tr><td>CANAL_DENUNCIAS</td><td class="num">${D.N.length}</td><td>Sintético</td><td>Registros do canal, sem identificar pessoas</td></tr>
+    <tr><td>COLABORADORES_INTEGRIDADE</td><td class="num">${D.T.length}</td><td>Sintético</td><td>Controle de treinamentos e termos do RH</td></tr>
+    <tr><td>CONTROLES_INTERNOS</td><td class="num">${D.I.length}</td><td>Sintético</td><td>Matriz de riscos e controles da agência</td></tr>
+    <tr><td>CONSUMO_SEDE</td><td class="num">${D.S.length} meses</td><td>Sintético</td><td>Contas de energia e água da sede</td></tr>
+    <tr><td>Comunicação</td><td class="num">${D.K.length}</td><td>Sintético</td><td>Registro da assessoria de comunicação</td></tr>
+    <tr><td>Medições (MW, e-SIC, RH, Investe Nelas)</td><td class="num">${D.R.length}</td><td>Demonstração</td><td>ANEEL/SIGA, Portal da Transparência, RH e programa</td></tr>
+   </tbody></table></div>
+   <p class="rodape">Projeto acadêmico do Grupo 2 (iCEV, Ciência de Dados 2026.2) para o Desafio Investe Piauí. Não é um canal oficial da agência. Estrutura da carteira conforme o dicionário de dados de exemplo da Investe Piauí. Fonte dos totais oficiais: Governo do Piauí, "Piauí atrai 120 empreendimentos entre 2023 e 2025 e projeta R$ 44,7 bilhões em investimentos", dez. 2025.</p></div>`;
+ }
+};
+
+// =====================================================================
+// 7. EDITOR — esquema de cada tabela editavel: [chave, rotulo, tipo, opcoes]
+// =====================================================================
+const SN=["Sim","Não"], SNV=["","Sim","Não"];
+const ESQ = {
+ P:{t:"Projetos",id:"c",f:[["c","Código","text"],["n","Nome do projeto","text"],["e","Código da empresa","text"],["s","Setor","sel",SETORES],["cid","Município","text"],["st","Status","sel",ST],["da","Data de atração","date"],["dc","Data de captação","date"],["ip","Investimento previsto (R$)","num"],["ir","Investimento realizado (R$)","num"],["ep","Empregos previstos","num"],["eg","Empregos gerados","num"],["ei","Empregos indiretos","num"],["miss","Captado em missão","sel",SN],["estr","Investimento estrangeiro","sel",SN]]},
+ G:{t:"Due diligence",id:"e",f:[["e","Código da empresa","text"],["dd","Análise realizada","sel",SN],["risco","Nível de risco","sel",["","Baixo","Médio","Alto"]],["pend","Pendência aberta","sel",SNV],["decl","Declaração anticorrupção","sel",SN]]},
+ N:{t:"Canal de denúncias",id:"id",f:[["id","ID do relato","text"],["dr","Data do registro","date"],["cat","Categoria","sel",["Conflito de interesses","Fraude ou corrupção","Descumprimento de norma interna","Assédio ou conduta","Outros"]],["meta","Prazo-meta (dias)","num"],["dias","Dias até concluir (vazio = em apuração)","num"],["proc","Procedente","sel",SNV]]},
+ T:{t:"Colaboradores",id:"id",f:[["id","ID do colaborador","text"],["area","Área","text"],["trein","Treinamento de integridade","sel",SN],["cod","Código de conduta assinado","sel",SN],["conf","Declaração de conflito entregue","sel",SN]]},
+ I:{t:"Controles internos",id:"id",f:[["id","ID do controle","text"],["nome","Controle","text"],["proc","Processo","text"],["test","Testado no ano","sel",SN],["res","Resultado","sel",["","Efetivo","Com falha"]],["plano","Plano de ação no prazo","sel",SNV]]},
+ C:{t:"Contratos",id:"id",f:[["id","ID do contrato","text"],["ano","Ano","num"],["obj","Objeto","text"],["asg","Cláusula ASG","sel",["SIM","NÃO"]],["anti","Cláusula anticorrupção","sel",SN],["forn","Fornecedor avaliado","sel",SN]]},
+ X:{t:"Demandas externas",id:"id",f:[["id","ID da demanda","text"],["org","Órgão","sel",["SEMAR","INTERPI","Equatorial"]],["nome","Demanda","text"],["prj","Código do projeto","text"],["sla","Prazo SLA (dias)","num"],["dias","Dias até a resposta (vazio = sem resposta)","num"]]},
+ S:{t:"Consumo da sede",id:"m",f:[["m","Mês (AAAA-MM)","text"],["kwh","Energia (kWh)","num"],["agua","Água (m³)","num"],["res","Resíduos (kg)","num"]]},
+};
+// converte o texto digitado para o tipo do campo; devolve [valor, erro]
+function converter([k,lab,tp],txt){ txt=String(txt??"").trim();
+  if(tp==="num"){ if(txt==="") return [null,null]; const n=Number(txt.replace(/\./g,"").replace(",",".")), n2=Number(txt.replace(",",".")); const v=isNaN(n)?n2:(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(txt)||txt.includes(",")?n:n2); return isNaN(v)||v<0 ? [null,`${lab}: digite um número não negativo.`] : [v,null]; }
+  if(tp==="date"&&txt&&!/^\d{4}-\d{2}-\d{2}$/.test(txt)) return [null,`${lab}: use o formato AAAA-MM-DD.`];
+  return [txt===""?null:txt,null]; }
+function validar(tab,r,idx){ const e=ESQ[tab], id=r[e.id];
+  if(!id) return `${e.f[0][1]} é obrigatório.`;
+  if(D[tab].some((x,i)=>x[e.id]===id&&i!==idx)) return `Já existe um registro com ${e.f[0][1]} = ${id}.`;
+  if(tab==="P"){ if(!r.n) return "Nome do projeto é obrigatório."; if(r.ip==null||r.ip<=0) return "Investimento previsto deve ser maior que zero."; if((r.ir||0)>r.ip) return "O realizado não pode ser maior que o previsto."; if(r.da&&r.dc&&r.dc<r.da) return "A captação não pode ser anterior à atração."; r.ir=r.ir||0; }
+  if((tab==="X")&&(r.sla==null)) return "Prazo SLA é obrigatório.";
+  if((tab==="N")&&(r.meta==null)) return "Prazo-meta é obrigatório.";
+  if(tab==="S"&&!/^\d{4}-\d{2}$/.test(r.m)) return "Mês deve estar no formato AAAA-MM.";
+  return null; }
+function aplicar(fn){ UI.antes=SC.geral; fn(); salvar(); recalcular(); }
+function lerCSV(txt,tab){ const e=ESQ[tab], ls=txt.replace(/^﻿/,"").split(/\r?\n/).filter(l=>l.trim()); if(ls.length<2) throw new Error("O arquivo não tem linhas de dados.");
+  const sep=ls[0].includes(";")?";":",", cab=ls[0].split(sep).map(s=>s.trim().replace(/^"|"$/g,"")), novos=[];
+  const falta=e.f.map(f=>f[0]).filter(k=>!cab.includes(k)&&k===e.id); if(falta.length) throw new Error("Falta a coluna "+falta[0]+" na primeira linha.");
+  ls.slice(1).forEach((l,n)=>{ const cel=l.split(sep).map(s=>s.trim().replace(/^"|"$/g,"")), r={};
+    for(const f of e.f){ const i=cab.indexOf(f[0]); const [v,err]=converter(f,i<0?"":cel[i]); if(err) throw new Error(`Linha ${n+2}: ${err}`); r[f[0]]=v; }
+    const err=validar(tab,r,-1)||(novos.some(x=>x[e.id]===r[e.id])?"código repetido no arquivo.":null); if(err) throw new Error(`Linha ${n+2}: ${err}`); novos.push(r); });
+  return novos; }
+
+// =====================================================================
+// 8. NAVEGACAO E EVENTOS
+// =====================================================================
+const app=document.getElementById("app");
+function render(manter){
+  let r=(location.hash||"#geral").slice(1); if(!Object.hasOwn(telas,r)) r="geral";
+  const y=scrollY; app.innerHTML=telas[r](); if(manter) scrollTo(0,y);
+  document.querySelectorAll("#nav a").forEach(a=> a.getAttribute("href")==="#"+r ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+}
+const aviso=(m,erro=false)=>{UI.msg=m;UI.erro=erro};
+app.addEventListener("click",ev=>{ const b=ev.target.closest("button"); if(!b) return;
+  if(b.dataset.c){ UI.c=b.dataset.c; return render(true); }
+  if(b.dataset.tab){ UI.tab=b.dataset.tab; UI.edit=null; aviso(""); return render(true); }
+  if(b.dataset.ed!=null){ UI.edit=Number(b.dataset.ed); aviso("Registro carregado no formulário acima."); render(true); document.getElementById("f-ed")?.scrollIntoView({block:"center"}); return; }
+  if(b.dataset.del!=null){ const i=Number(b.dataset.del), id=D[UI.tab][i][ESQ[UI.tab].id]; aplicar(()=>D[UI.tab].splice(i,1)); UI.edit=null; aviso(`Registro ${id} excluído. Indicadores recalculados.`); return render(true); }
+  const a=b.dataset.acao; if(!a) return;
+  if(a==="cancelar"){ UI.edit=null; aviso(""); return render(true); }
+  if(a==="restaurar"){ UI.confirma=true; return render(true); }
+  if(a==="restaurar-nao"){ UI.confirma=false; return render(true); }
+  if(a==="restaurar-sim"){ D=clone(ORIG); W={amb:25,soc:25,gov:50}; EDITADO=false; UI.confirma=false; UI.edit=null; UI.antes=null; try{localStorage.removeItem(CHAVE)}catch(e){} recalcular(); aviso("Base original restaurada."); return render(true); }
+  if(a==="exportar"){ const txt=JSON.stringify({D,W},null,1);
+    try{ const u=URL.createObjectURL(new Blob([txt],{type:"application/json"})), l=document.createElement("a"); l.href=u; l.download="base_painel_asg.json"; document.body.append(l); l.click(); l.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000);}catch(e){}
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{aviso("Base exportada: arquivo baixado e conteúdo copiado para a área de transferência.");render(true)},()=>{aviso("Base exportada como base_painel_asg.json.");render(true)}); }
+});
+app.addEventListener("submit",ev=>{ if(ev.target.id!=="f-ed") return; ev.preventDefault();
+  const e=ESQ[UI.tab], r={}; for(const f of e.f){ const [v,err]=converter(f,document.getElementById("ed-"+f[0]).value); if(err){aviso(err,true);return render(true)} r[f[0]]=v; }
+  const idx=UI.edit??-1, err=validar(UI.tab,r,idx); if(err){ aviso(err,true); return render(true); }
+  aplicar(()=>{ if(idx>=0) D[UI.tab][idx]={...D[UI.tab][idx],...r}; else D[UI.tab].push(r); });
+  aviso(`Registro ${r[e.id]} ${idx>=0?"alterado":"adicionado"}. Indicadores e gráficos recalculados.`); UI.edit=null; render(true);
+});
+app.addEventListener("change",ev=>{ const t=ev.target;
+  if(t.id==="f-setor"||t.id==="f-status"){ UI.fs=document.getElementById("f-setor").value; UI.ft=document.getElementById("f-status").value; return render(true); }
+  if(t.id&&t.id.startsWith("w-")){ const v=Math.max(0,Math.min(100,Number(t.value)||0)); aplicar(()=>{W[t.id.slice(2)]=v}); return render(true); }
+  if((t.id==="imp-json"||t.id==="imp-csv")&&t.files[0]){ const fr=new FileReader(), csv=t.id==="imp-csv";
+    fr.onload=()=>{ try{ if(csv){ const novos=lerCSV(String(fr.result),UI.tab); aplicar(()=>D[UI.tab].push(...novos)); aviso(`${novos.length} registros importados para ${ESQ[UI.tab].t}.`); }
+        else { const o=JSON.parse(String(fr.result)), d=o.D||o; if(!Object.keys(ORIG).every(k=>Array.isArray(d[k]))) throw new Error("O arquivo não tem todas as tabelas do painel."); aplicar(()=>{D=d; if(o.W) W=o.W}); aviso("Base importada."); }
+      }catch(e){ aviso("Importação recusada: "+e.message,true); } UI.edit=null; render(true); };
+    fr.readAsText(t.files[0]); }
+});
+addEventListener("hashchange",()=>{UI.edit=null;aviso("");render();scrollTo(0,0)});
+render();
+</script>
