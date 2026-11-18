@@ -1,0 +1,167 @@
+﻿ARQUIVO;ABA;VARIÁVEL;DESCRIÇÃO DA VARIÁVEL;COMO PREENCHER
+base_asg_grupo2.xlsx;Empresas;Código da Empresa;Identificador único da empresa;"Preencher com o código institucional atribuído à empresa; não repetir entre empresas distintas"
+base_asg_grupo2.xlsx;Empresas;Aprovado Presidente;Indica se o cadastro/empresa recebeu aprovação da Presidência;Preencher com Sim ou Não
+base_asg_grupo2.xlsx;Empresas;Nome da Empresa;Razão social ou nome utilizado para identificação da empresa;Preencher com o nome oficial da empresa, mantendo padrão de escrita
+base_asg_grupo2.xlsx;Empresas;CNPJ ou CPF;Documento de identificação da empresa ou responsável;Preencher com CNPJ ou CPF válido, preferencialmente mantendo um único padrão de formatação
+base_asg_grupo2.xlsx;Empresas;Setor Investe;Setor institucional responsável pelo acompanhamento;Preencher conforme categorias oficiais adotadas pela Investe
+base_asg_grupo2.xlsx;Empresas;Captada Por Missao;Indica se a empresa foi captada durante missão institucional;Preencher com Sim ou Não
+base_asg_grupo2.xlsx;Empresas;Pais de Origem;País de origem da empresa;Preencher com o nome padronizado do país
+base_asg_grupo2.xlsx;Empresas;Data Primeiro Contato;Data em que ocorreu o primeiro contato com a empresa;Preencher como data
+base_asg_grupo2.xlsx;Empresas;Responsável Primeiro Contato;Responsável institucional pelo primeiro contato;Preencher com nome ou identificação padronizada do responsável
+base_asg_grupo2.xlsx;Empresas;Status Atração;Situação atual da empresa no processo de atração;Preencher utilizando somente as categorias oficiais de status
+base_asg_grupo2.xlsx;CodigoCidade;x;Longitude associada ao município;Preencher com coordenada geográfica decimal
+base_asg_grupo2.xlsx;CodigoCidade;y;Latitude associada ao município;Preencher com coordenada geográfica decimal
+base_asg_grupo2.xlsx;CodigoCidade;Cidade;Nome do município;Preencher conforme nomenclatura oficial do município
+base_asg_grupo2.xlsx;CodigoCidade;Código da Cidade;Código oficial de identificação do município;Preencher com o código IBGE correspondente
+base_asg_grupo2.xlsx;CodigoCidade;Estado;Nome do estado;Preencher com nome oficial da Unidade da Federação
+base_asg_grupo2.xlsx;CodigoCidade;País;País onde o município está localizado;Preencher com nome padronizado do país
+base_asg_grupo2.xlsx;CodigoCidade;Localização;Descrição geográfica completa do município;Preencher no padrão Cidade, Estado, País
+base_asg_grupo2.xlsx;CodigoCidade;UF;Sigla da Unidade da Federação;Preencher com sigla oficial de duas letras
+base_asg_grupo2.xlsx;CodigoCidade;Area Km2;Área territorial do município em quilômetros quadrados;Preencher com valor numérico em km²
+base_asg_grupo2.xlsx;CodigoCidade;Territorio;Território de desenvolvimento ao qual pertence o município;Preencher conforme classificação territorial institucional adotada
+base_asg_grupo2.xlsx;Projetos;Código do Projeto;Identificador único do projeto;Preencher com código único do projeto
+base_asg_grupo2.xlsx;Projetos;Código da Empresa;Identificador da empresa responsável pelo projeto;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;Projetos;Nome Empresa;Nome da empresa associada ao projeto;Preencher conforme cadastro da aba Empresas
+base_asg_grupo2.xlsx;Projetos;CNPJ ou CPF;Documento da empresa associada ao projeto;Preencher conforme cadastro da empresa
+base_asg_grupo2.xlsx;Projetos;Nome do Projeto;Nome utilizado para identificação do projeto;Preencher com nome oficial ou institucional do projeto
+base_asg_grupo2.xlsx;Projetos;Setor Investe;Setor institucional responsável pelo projeto;Preencher conforme categorias oficiais da Investe
+base_asg_grupo2.xlsx;Projetos;Detalhamento do Projeto;Descrição complementar do projeto;Preencher com resumo objetivo do escopo do projeto
+base_asg_grupo2.xlsx;Projetos;Categoria do Projeto;Classificação principal do projeto;Preencher conforme categorias padronizadas
+base_asg_grupo2.xlsx;Projetos;Subcategoria Principal do Projeto;Classificação específica dentro da categoria do projeto;Preencher conforme subcategorias previamente definidas
+base_asg_grupo2.xlsx;Projetos;Órgão do Estado;Órgão estadual relacionado ao projeto;Preencher com nome ou sigla oficial do órgão
+base_asg_grupo2.xlsx;Projetos;Captada por Missão;Indica se o projeto foi captado durante missão institucional;Preencher com Sim ou Não
+base_asg_grupo2.xlsx;Projetos;Investimento Estrangeiro;Indica presença de investimento de origem estrangeira;Preencher conforme classificação institucional definida
+base_asg_grupo2.xlsx;Projetos;Origem do Recurso;Origem dos recursos financeiros previstos para o projeto;Preencher com categoria padronizada da fonte do recurso
+base_asg_grupo2.xlsx;Projetos;Data de Atração;Data relacionada ao início da atração do projeto;Preencher como data
+base_asg_grupo2.xlsx;Projetos;Data de Captação;Data em que o projeto foi efetivamente captado;Preencher como data
+base_asg_grupo2.xlsx;Projetos;Expectativa de Inauguração;Data prevista para inauguração;Preencher como data prevista
+base_asg_grupo2.xlsx;Projetos;Data de Inauguração;Data efetiva da inauguração;"Preencher como data; deixar vazio enquanto não ocorrer"
+base_asg_grupo2.xlsx;Projetos;Investimento Previsto;Valor financeiro previsto para implantação do projeto;Preencher somente com valor numérico monetário, sem texto no campo
+base_asg_grupo2.xlsx;Projetos;Faturamento Previsto;Valor de faturamento previsto para o projeto;Preencher somente com valor numérico monetário
+base_asg_grupo2.xlsx;Projetos;Empregos Diretos Previsto;Quantidade prevista de empregos diretos;Preencher com número inteiro não negativo
+base_asg_grupo2.xlsx;Projetos;Empregos Indiretos;Quantidade prevista de empregos indiretos;Preencher com número inteiro não negativo
+base_asg_grupo2.xlsx;Projetos;Responsável pela Atração;Responsável institucional pela etapa de atração;Preencher com identificação padronizada do responsável
+base_asg_grupo2.xlsx;Projetos;Responsável pela Captação;Responsável institucional pela captação;Preencher com identificação padronizada do responsável
+base_asg_grupo2.xlsx;Projetos;Status do Projeto;Estágio ou status atual do projeto;Preencher exclusivamente conforme lista institucional de status
+base_asg_grupo2.xlsx;Projetos;Situação do Projeto;Condição atual do projeto;Preencher conforme categorias oficiais de situação
+base_asg_grupo2.xlsx;Projetos;Validação do código da empresa(TESTE);Campo de conferência do relacionamento entre empresa e projeto;"Campo de validação; não utilizar como variável analítica principal"
+base_asg_grupo2.xlsx;CidadeProjeto;Código do Projeto;Identificador do projeto;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;CidadeProjeto;Código da Empresa;Identificador da empresa vinculada ao projeto;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;CidadeProjeto;Nome da Empresa;Nome da empresa relacionada ao projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;CidadeProjeto;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;CidadeProjeto;Nome Projeto;Nome do projeto associado ao município;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;CidadeProjeto;Setor Investe;Setor responsável pelo projeto;Preencher conforme classificação institucional
+base_asg_grupo2.xlsx;CidadeProjeto;Cidade;Município relacionado ao projeto;Preencher utilizando nomenclatura padronizada da aba CodigoCidade
+base_asg_grupo2.xlsx;CidadeProjeto;Empregos Diretos Previsto;Quantidade de empregos diretos prevista no município/projeto;Preencher com número inteiro não negativo
+base_asg_grupo2.xlsx;Processos_Externos;ID Demanda;Identificador único da demanda externa;Preencher com código único da demanda
+base_asg_grupo2.xlsx;Processos_Externos;Nome Demanda;Nome ou tipo da demanda externa;Preencher com denominação padronizada da demanda
+base_asg_grupo2.xlsx;Processos_Externos;ID Projeto;Identificador do projeto relacionado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;Processos_Externos;Nome Empresa;Empresa associada à demanda;Preencher conforme cadastro da aba Empresas
+base_asg_grupo2.xlsx;Processos_Externos;Projeto;Nome do projeto relacionado à demanda;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;Processos_Externos;Investimento Previsto;Investimento previsto do projeto relacionado;Preencher com valor numérico monetário
+base_asg_grupo2.xlsx;Processos_Externos;Empregos Diretos Previsto;Quantidade prevista de empregos diretos;Preencher com número inteiro não negativo
+base_asg_grupo2.xlsx;Processos_Externos;Orgão (SEMAR/INTERPI/Equatorial);Órgão ou instituição externa responsável pela demanda;Preencher conforme lista padronizada de órgãos
+base_asg_grupo2.xlsx;Processos_Externos;Data Solicitão;Data de encaminhamento da solicitação;Preencher como data
+base_asg_grupo2.xlsx;Processos_Externos;Data Resposta;Data em que a demanda recebeu resposta;"Preencher como data; manter vazio enquanto não respondida"
+base_asg_grupo2.xlsx;Processos_Externos;Prazo SLA (dias);Prazo estabelecido para atendimento da demanda;Preencher com quantidade inteira de dias
+base_asg_grupo2.xlsx;Processos_Externos;Status (Dentro SLA/Fora SLA);Classificação do atendimento em relação ao prazo;Preencher com Dentro SLA ou Fora SLA
+base_asg_grupo2.xlsx;Processos_Externos;Diferença entre dias;Quantidade de dias decorridos entre solicitação e resposta;Preferencialmente calcular automaticamente a partir das datas
+base_asg_grupo2.xlsx;Processos_Externos;Status do Projeto;Status do projeto relacionado à demanda;Preencher conforme classificação institucional
+base_asg_grupo2.xlsx;Processos_Externos;Situação do Projeto;Situação atual do projeto relacionado;Preencher conforme classificação institucional
+base_asg_grupo2.xlsx;Comunicação;Código do Projeto;Identificador do projeto relacionado à atividade de comunicação;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;Comunicação;Código da Empresa;Identificador da empresa relacionada;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;Comunicação;Nome Empresa;Nome da empresa relacionada à atividade;Preencher conforme cadastro da empresa
+base_asg_grupo2.xlsx;Comunicação;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;Comunicação;Nome do Projeto;Nome do projeto relacionado à atividade;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;Comunicação;Atividade Principal;Tipo principal da atividade realizada;Preencher conforme categorias padronizadas de atividades
+base_asg_grupo2.xlsx;Comunicação;Subatividade;Detalhamento ou modalidade da atividade;Preencher conforme categorias previamente definidas
+base_asg_grupo2.xlsx;Comunicação;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;Comunicação;Pauta (Assunto);Assunto ou objetivo principal da atividade;Preencher com descrição objetiva da pauta
+base_asg_grupo2.xlsx;Comunicação;Data Inicial;Data de início da atividade;Preencher como data
+base_asg_grupo2.xlsx;Comunicação;Data Final;Data de encerramento da atividade;Preencher como data
+base_asg_grupo2.xlsx;EtapasAgro;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasAgro;Código da Empresa;Identificador da empresa responsável pelo projeto;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasAgro;Nome Empresa;Nome da empresa associada ao projeto;Preencher conforme cadastro da empresa
+base_asg_grupo2.xlsx;EtapasAgro;CNPJ ou CPF;Documento da empresa associada;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasAgro;Nome Projeto;Nome do projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasAgro;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasAgro;Campos das etapas de implantação;Marcos de acompanhamento do avanço do projeto, incluindo formalização, estudos, licenças, financiamento, infraestrutura, obras, contratação, inauguração e operação;Preencher conforme ocorrência ou conclusão de cada etapa, utilizando o padrão institucional definido para status/data
+base_asg_grupo2.xlsx;EtapasEnergia;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasEnergia;Código da Empresa;Identificador da empresa responsável pelo projeto;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasEnergia;Nome Empresa;Nome da empresa associada ao projeto;Preencher conforme cadastro da empresa
+base_asg_grupo2.xlsx;EtapasEnergia;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasEnergia;Nome/identificação do Projeto;Identificação do projeto acompanhado;Preencher conforme cadastro do projeto
+base_asg_grupo2.xlsx;EtapasEnergia;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasEnergia;Etapas 1 a 43;Marcos sequenciais de desenvolvimento do projeto, desde reuniões preliminares até início da operação;Preencher cada etapa conforme seu cumprimento, mantendo padrão único para datas, quantidades e status
+base_asg_grupo2.xlsx;EtapasTurismo;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasTurismo;Código da Empresa;Identificador da empresa responsável;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasTurismo;Nome da Empresa;Empresa responsável pelo projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasTurismo;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasTurismo;Nome do Projeto;Projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasTurismo;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasTurismo;Campos das etapas de implantação;Marcos relacionados a reuniões, formalizações, estudos, projetos, licenciamento, financiamento, infraestrutura, obras, Cadastur, contratação, inauguração e operação;Preencher conforme ocorrência/conclusão de cada marco
+base_asg_grupo2.xlsx;EtapasMineracao;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasMineracao;Código da Empresa;Identificador da empresa responsável;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasMineracao;Nome da Empresa;Empresa responsável pelo projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasMineracao;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasMineracao;Nome do Projeto;Projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasMineracao;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasMineracao;Campos das etapas de implantação;Marcos específicos da mineração, incluindo direitos minerários, ANM, estudos, licenciamento, financiamento, infraestrutura, produção e operação;Preencher conforme documentação e avanço efetivo de cada etapa
+base_asg_grupo2.xlsx;EtapasZpe;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasZpe;Código da Empresa;Identificador da empresa responsável;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasZpe;Nome Empresa;Empresa responsável pelo projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasZpe;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasZpe;Nome Projeto;Projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasZpe;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasZpe;Etapas 1 a 43;Marcos sequenciais utilizados para acompanhar o desenvolvimento e implantação do projeto;Preencher cada etapa conforme cumprimento, data, quantidade ou status aplicável
+base_asg_grupo2.xlsx;EtapasPorto;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasPorto;Código da Empresa;Identificador da empresa responsável;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasPorto;Nome Empresa;Empresa responsável pelo projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasPorto;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasPorto;Nome Projeto;Projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasPorto;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasPorto;Etapas 1 a 43;Marcos sequenciais utilizados no acompanhamento da implantação do projeto;Preencher conforme avanço efetivo de cada etapa
+base_asg_grupo2.xlsx;EtapasMultissetorial;Código do Projeto;Identificador do projeto acompanhado;Preencher com código existente na aba Projetos
+base_asg_grupo2.xlsx;EtapasMultissetorial;Código da Empresa;Identificador da empresa responsável;Preencher com código existente na aba Empresas
+base_asg_grupo2.xlsx;EtapasMultissetorial;Nome da Empresa;Empresa responsável pelo projeto;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasMultissetorial;CNPJ ou CPF;Documento da empresa;Preencher conforme cadastro institucional
+base_asg_grupo2.xlsx;EtapasMultissetorial;Nome do Projeto;Projeto acompanhado;Preencher conforme aba Projetos
+base_asg_grupo2.xlsx;EtapasMultissetorial;Setor Investe;Setor institucional responsável;Preencher conforme classificação oficial
+base_asg_grupo2.xlsx;EtapasMultissetorial;Campos das etapas de implantação;Marcos gerais de acompanhamento do projeto, incluindo formalização, estudos, projetos, licenciamento, financiamento, infraestrutura, obras, contratação e operação;Preencher conforme avanço efetivo de cada etapa
+base_asg_grupo2.xlsx;Projetos;Investimento Realizado (adicional);Campo ADICIONAL do grupo: valor executado até o momento;"Preencher com valor numérico; soma dos implantados reconcilia com R$ 11,87 bi (VALIDACAO T09)"
+base_asg_grupo2.xlsx;Projetos;Empregos Gerados (adicional);Campo ADICIONAL do grupo: empregos efetivamente gerados;"Preencher com inteiro; soma dos implantados reconcilia com 10,5 mil (VALIDACAO T10)"
+base_asg_grupo2.xlsx;Projetos;% Execução (adicional);Campo ADICIONAL calculado: realizado ÷ previsto;"Fórmula automática; não digitar"
+base_asg_grupo2.xlsx;Empresas;CNPJ ou CPF;Em branco na base sintética (LGPD/sigilo comercial);Preencher apenas quando a Investe disponibilizar os cadastros reais
+base_asg_grupo2.xlsx;SETORES;todas as colunas;Camada do grupo: descrição e agregados por Setor Investe;Contagens e somas calculadas sobre a aba Projetos
+base_asg_grupo2.xlsx;INDICADORES ASG;todas as colunas;Catálogo de indicadores do grupo (fórmula, meta, direção, fonte);Metas 'a pactuar' devem ser fechadas com a Investe Piauí
+base_asg_grupo2.xlsx;RESULTADOS ASG;todas as colunas;Medições anuais por indicador (valores sintéticos de demonstração);Substituir pelos valores reais na etapa de preparação de dados
+base_asg_grupo2.xlsx;USINAS_ANEEL / CAGED;todas as colunas;Staging de fontes públicas (estrutura oficial de colunas);Baixar SIGA/ANEEL (filtrar SigUF=PI) e Novo CAGED e colar aqui
+base_asg_grupo2.xlsx;CONSUMO_SEDE / CONTRATOS;todas as colunas;Staging interno sintético;Substituir pelos registros reais da agência
+base_asg_grupo2.xlsx;VALIDACAO;T01–T13;Testes automáticos de reconciliação com totais oficiais;"Não editar; todas as linhas devem exibir OK"
+base_asg_grupo2.xlsx;(geral);Página15;Aba do exemplo oficial omitida nesta base;"Era cópia da aba Projetos; duplicar tabela gera divergência"
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Código da Empresa;Identificador da empresa (chave para a aba Empresas da base principal);Código existente na aba Empresas
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Due diligence realizada;Indica se a empresa passou por análise de integridade;Sim ou Não
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Data da análise;Data em que a análise foi concluída;"Data; vazio se não realizada"
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Nível de risco;Classificação de risco de integridade resultante da análise;"Baixo, Médio ou Alto; vazio se não realizada"
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Pendência aberta;Indica se há apontamento da análise ainda sem tratamento;"Sim ou Não; vazio se não realizada"
+base_integridade_grupo2.xlsx;DUE_DILIGENCE;Declaração anticorrupção assinada;Indica se a empresa assinou a declaração anticorrupção;Sim ou Não
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;ID Relato;Identificador único do relato;Código único (DEN001…)
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;Data do registro;Data de entrada do relato no canal;Data
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;Categoria;Assunto do relato;"Lista fechada de categorias; nunca identificar pessoas (LGPD)"
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;Data de conclusão da apuração;Data em que a apuração terminou;"Data; vazio enquanto em apuração"
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;Prazo-meta (dias);Prazo interno para concluir a apuração;Inteiro de dias
+base_integridade_grupo2.xlsx;CANAL_DENUNCIAS;Procedente;Resultado da apuração;"Sim ou Não; vazio enquanto em apuração"
+base_integridade_grupo2.xlsx;COLABORADORES_INTEGRIDADE;ID Colaborador;Identificador sem nome, para não expor dado pessoal;Código (COL01…)
+base_integridade_grupo2.xlsx;COLABORADORES_INTEGRIDADE;Área;Área de lotação;Lista padronizada de áreas
+base_integridade_grupo2.xlsx;COLABORADORES_INTEGRIDADE;Treinamento de integridade 2026;Indica se concluiu o treinamento anual;Sim ou Não
+base_integridade_grupo2.xlsx;COLABORADORES_INTEGRIDADE;Termo do código de conduta assinado;Indica adesão formal ao código de conduta;Sim ou Não
+base_integridade_grupo2.xlsx;COLABORADORES_INTEGRIDADE;Declaração de conflito de interesses entregue;Indica entrega da declaração anual;Sim ou Não
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;ID Controle;Identificador do controle;Código (CI01…)
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;Controle;Descrição do controle interno;Texto objetivo
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;Processo;Processo a que o controle pertence;Lista padronizada
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;Testado em 2026;Indica se o controle foi testado no ano;Sim ou Não
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;Resultado do teste;Resultado do teste do controle;"Efetivo ou Com falha; vazio se não testado"
+base_integridade_grupo2.xlsx;CONTROLES_INTERNOS;Plano de ação no prazo;Para controles com falha, indica se o plano de ação está em dia;"Sim ou Não; vazio se não se aplica"
+base_integridade_grupo2.xlsx;CONTRATOS_INTEGRIDADE;id_contrato;Identificador do contrato (chave para a aba CONTRATOS da base principal);Código existente na aba CONTRATOS
+base_integridade_grupo2.xlsx;CONTRATOS_INTEGRIDADE;Cláusula anticorrupção;Indica se o contrato traz cláusula anticorrupção;Sim ou Não
+base_integridade_grupo2.xlsx;CONTRATOS_INTEGRIDADE;Fornecedor avaliado quanto à integridade;Indica se o fornecedor passou por avaliação antes da assinatura;Sim ou Não
