@@ -1,7 +1,7 @@
 <title>Painel ASG Investe Piauí</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap">
 <style>
-/* Layout: faixa azul da agencia no topo, abas fixas; cada aba e uma tela de trabalho — resumo em cima, detalhe embaixo. */
+/* cores e fontes do painel (tema claro; o escuro vem logo abaixo) */
 :root{
   --bg:#f3f5f9; --surface:#ffffff; --surface2:#e7ecf4; --ink:#16233b; --muted:#566279; --line:#d3dae6;
   --brand:#3a5a8d; --brand-deep:#1f3a66; --on-brand:#ffffff; --on-brand-soft:#d6e0f1;
@@ -171,9 +171,7 @@ select,input[type=text],input[type=number],input[type=date]{font:inherit;font-si
 <script id="dados" type="application/json">/*DATA*/</script>
 <script>
 "use strict";
-// =====================================================================
-// 1. DADOS — a base original vem embutida; edicoes ficam salvas neste navegador
-// =====================================================================
+// --- 1. DADOS (base embutida; o que o usuario edita fica salvo no navegador) ---
 const ORIG = JSON.parse(document.getElementById("dados").textContent);
 const CHAVE = "painelASG.grupo2.v2";
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -182,9 +180,7 @@ try { const s = JSON.parse(localStorage.getItem(CHAVE) || "null"); if (s && s.D 
 const salvar = () => { EDITADO = true; try { localStorage.setItem(CHAVE, JSON.stringify({D, W})); } catch (e) {} };
 const TOTAL_MUN_PI = 224; // municipios do Piaui (IBGE)
 
-// =====================================================================
-// 2. UTILITARIOS
-// =====================================================================
+// --- 2. UTILITARIOS ---
 const nf = (v,d=0)=> v==null||isNaN(v) ? "—" : Number(v).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
 const pct = (v,d=1)=> v==null||isNaN(v) ? "—" : nf(v*100,d)+"%";
 const bi = v => "R$ "+nf(v/1e9,2)+" bi";
@@ -201,9 +197,7 @@ const ST = ["Implantado","Em implantação","Em estruturação"];
 const SETORES = ["Energia","Agro","Turismo","Mineração","ZPE","Porto","Multissetorial"];
 const corSetor = s => `var(--c${SETORES.indexOf(s)%7+1})`;
 
-// =====================================================================
-// 3. CALCULO — todas as contas em um lugar so; o resultado fica em M
-// =====================================================================
+// --- 3. CALCULO (todas as contas ficam aqui; o resultado vai para M) ---
 function calcular(){
   const P=D.P, imp=P.filter(p=>p.st===ST[0]), emi=P.filter(p=>p.st===ST[1]), est=P.filter(p=>p.st===ST[2]);
   const prev=sum(P,p=>p.ip), real=sum(P,p=>p.ir);
@@ -238,9 +232,7 @@ function calcular(){
     ctrlTest:div(test.length,D.I.length), ctrlEfet:div(efet.length,test.length) };
 }
 
-// =====================================================================
-// 4. CATALOGO — compromissos, temas materiais e indicadores
-// =====================================================================
+// --- 4. CATALOGO (compromissos, temas e indicadores) ---
 // Compromissos: redacao do grupo a partir da missao da agencia. Trocar pelo texto oficial quando disponivel.
 const COMP = [
  {id:"C1",t:"Atrair investimento estratégico e diversificar a economia"},
@@ -319,9 +311,7 @@ function recalcular(){
 }
 recalcular();
 
-// =====================================================================
-// 5. COMPONENTES VISUAIS (devolvem HTML/SVG em texto)
-// =====================================================================
+// --- 5. COMPONENTES VISUAIS (devolvem HTML/SVG em texto) ---
 const faixa = s => s==null ? "" : s>=80 ? "o" : s>=50 ? "w" : "b";
 const bars = (rows,fmt,teto,cor)=> { const mx=teto||Math.max(...rows.map(r=>r[1]),1e-9);
   return `<div class="bars">${rows.map(r=>`<div class="bar"><span class="lb" title="${esc(r[0])}">${esc(r[0])}</span><div class="t"><div class="f" style="width:${Math.max(1,Math.min(100,r[1]/mx*100)).toFixed(1)}%;${r[2]?`background:${r[2]}`:cor?`background:${cor}`:""}"></div></div><span class="n">${fmt(r[1])}</span></div>`).join("")}</div>`; };
@@ -377,9 +367,7 @@ function leitura(){ const por=SETORES.map(s=>[s,sum(D.P.filter(p=>p.s===s),p=>p.
   melhores.forEach(i=>f.push(["Destaque",`${i.id} ${i.nome}: ${i.f(i.v)} (nota ${nf(i.sc)}).`]));
   return `<ul class="alertas">${f.map(x=>`<li><span class="chip ${x[0]==="Destaque"?"calc":x[0]==="Carteira"?"gov":x[0]==="Atenção"?"bad":"demo"}">${x[0]}</span><span>${esc(x[1])}</span></li>`).join("")}</ul>`; }
 
-// =====================================================================
-// 6. TELAS — cada funcao devolve o HTML de uma aba
-// =====================================================================
+// --- 6. TELAS (uma funcao por aba) ---
 const UI = {c:"todos", fs:"", ft:"", tab:"P", msg:"", erro:false, edit:null, confirma:false};
 const telas = {
  geral(){
@@ -593,9 +581,7 @@ const telas = {
  }
 };
 
-// =====================================================================
-// 7. EDITOR — esquema de cada tabela editavel: [chave, rotulo, tipo, opcoes]
-// =====================================================================
+// --- 7. EDITOR (campos de cada tabela: chave, rotulo, tipo, opcoes) ---
 const SN=["Sim","Não"], SNV=["","Sim","Não"];
 const ESQ = {
  P:{t:"Projetos",id:"c",f:[["c","Código","text"],["n","Nome do projeto","text"],["e","Código da empresa","text"],["s","Setor","sel",SETORES],["cid","Município","text"],["st","Status","sel",ST],["da","Data de atração","date"],["dc","Data de captação","date"],["ip","Investimento previsto (R$)","num"],["ir","Investimento realizado (R$)","num"],["ep","Empregos previstos","num"],["eg","Empregos gerados","num"],["ei","Empregos indiretos","num"],["miss","Captado em missão","sel",SN],["estr","Investimento estrangeiro","sel",SN]]},
@@ -629,9 +615,7 @@ function lerCSV(txt,tab){ const e=ESQ[tab], ls=txt.replace(/^﻿/,"").split(/\r?
     const err=validar(tab,r,-1)||(novos.some(x=>x[e.id]===r[e.id])?"código repetido no arquivo.":null); if(err) throw new Error(`Linha ${n+2}: ${err}`); novos.push(r); });
   return novos; }
 
-// =====================================================================
-// 8. NAVEGACAO E EVENTOS
-// =====================================================================
+// --- 8. NAVEGACAO E EVENTOS ---
 const app=document.getElementById("app");
 function render(manter){
   let r=(location.hash||"#geral").slice(1); if(!Object.hasOwn(telas,r)) r="geral";
