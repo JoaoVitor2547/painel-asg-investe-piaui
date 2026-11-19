@@ -133,7 +133,7 @@ base_asg_grupo2.xlsx;Projetos;Empregos Gerados (adicional);Campo ADICIONAL do gr
 base_asg_grupo2.xlsx;Projetos;% Execução (adicional);Campo ADICIONAL calculado: realizado ÷ previsto;"Fórmula automática; não digitar"
 base_asg_grupo2.xlsx;Empresas;CNPJ ou CPF;Em branco na base sintética (LGPD/sigilo comercial);Preencher apenas quando a Investe disponibilizar os cadastros reais
 base_asg_grupo2.xlsx;SETORES;todas as colunas;Camada do grupo: descrição e agregados por Setor Investe;Contagens e somas calculadas sobre a aba Projetos
-base_asg_grupo2.xlsx;INDICADORES ASG;todas as colunas;Catálogo de indicadores do grupo (fórmula, meta, direção, fonte);Metas 'a pactuar' devem ser fechadas com a Investe Piauí
+base_asg_grupo2.xlsx;INDICADORES ASG;todas as colunas;Indicadores medidos por demonstração (fórmula, meta, direção, fonte);Catálogo completo dos 41 indicadores: docs/dicionario_formulas_indicadores.xlsx
 base_asg_grupo2.xlsx;RESULTADOS ASG;todas as colunas;Medições anuais por indicador (valores sintéticos de demonstração);Substituir pelos valores reais na etapa de preparação de dados
 base_asg_grupo2.xlsx;USINAS_ANEEL / CAGED;todas as colunas;Staging de fontes públicas (estrutura oficial de colunas);Baixar SIGA/ANEEL (filtrar SigUF=PI) e Novo CAGED e colar aqui
 base_asg_grupo2.xlsx;CONSUMO_SEDE / CONTRATOS;todas as colunas;Staging interno sintético;Substituir pelos registros reais da agência

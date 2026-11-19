@@ -77,18 +77,20 @@ Abrir a ferramenta: acessar o link publicado, ou baixar o repositório e dar dup
 Reconstruir depois de alterar as planilhas ou o código (rodar na raiz do repositório):
 
 ```bash
-pip install openpyxl playwright
+pip install openpyxl playwright reportlab
+python3 -m playwright install chromium   # navegador usado para ler o painel e gerar dicionários e PDF
 python3 src/gerar_base_integridade.py   # opcional: recria a base sintética dos temas T1 e T14
 python3 src/extrair.py                  # planilhas -> dados/dados.json
 python3 src/montar.py                   # src/template.html + dados -> index.html
 python3 src/gerar_dicionarios.py        # atualiza os dicionários da pasta docs/
-python3 src/gerar_documentacao.py       # atualiza o PDF de documentação (requer: pip install reportlab)
+python3 src/gerar_documentacao.py       # atualiza o PDF de documentação
 ```
 
 Teste automatizado das 7 telas, em computador e celular, e do editor:
 
 ```bash
 npm install playwright
+npx playwright install chromium
 node tests/teste.js
 ```
 
