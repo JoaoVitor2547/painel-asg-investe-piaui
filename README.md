@@ -41,6 +41,8 @@ Todos os registros são **sintéticos**. O cadastro real de empresas e projetos 
 | `dados/base_integridade_grupo2.xlsx` | Temas T1 e T14 | DUE_DILIGENCE, CANAL_DENUNCIAS, COLABORADORES_INTEGRIDADE, CONTROLES_INTERNOS, CONTRATOS_INTEGRIDADE |
 | `dados/dados.json` | Extrato enxuto das duas planilhas, embutido no painel | gerado por `src/extrair.py` |
 
+A documentação completa (como a ferramenta foi feita e guia de uso de cada aba) está em [`docs/documentacao_painel_asg.pdf`](docs/documentacao_painel_asg.pdf).
+
 Cada planilha traz o seu dicionário na aba `DICIONARIO DE DADOS`. A versão reunida está em [`docs/dicionario_de_dados.md`](docs/dicionario_de_dados.md).
 
 ## Indicadores e fórmulas
@@ -80,6 +82,7 @@ python3 src/gerar_base_integridade.py   # opcional: recria a base sintética dos
 python3 src/extrair.py                  # planilhas -> dados/dados.json
 python3 src/montar.py                   # src/template.html + dados -> index.html
 python3 src/gerar_dicionarios.py        # atualiza os dicionários da pasta docs/
+python3 src/gerar_documentacao.py       # atualiza o PDF de documentação (requer: pip install reportlab)
 ```
 
 Teste automatizado das 7 telas, em computador e celular, e do editor:
@@ -98,8 +101,9 @@ src/extrair.py                  planilhas -> dados.json
 src/montar.py                   gera o index.html
 src/gerar_base_integridade.py   gera a base sintética dos temas T1 e T14
 src/gerar_dicionarios.py        gera os dicionários da pasta docs/
+src/gerar_documentacao.py       gera o PDF de documentação
 dados/                          bases de dados e dados.json
-docs/                           dicionário de dados e dicionário de fórmulas e indicadores
+docs/                           documentação em PDF, dicionário de dados e dicionário de fórmulas e indicadores
 tests/teste.js                  teste automatizado
 assets/                         logotipo usado no cabeçalho
 ```
@@ -111,6 +115,18 @@ assets/                         logotipo usado no cabeçalho
 - As metas de 2030 são proposta do grupo, a pactuar com a Investe Piauí.
 - As edições feitas na tela Editar dados não são compartilhadas entre usuários.
 
+## Equipe
+
+Grupo 2 — Engenharia de Software (turma Borg), disciplina de Ciência de Dados, iCEV, 2026.2.
+
+- Antonio Guilherme Santos da Silva
+- João Vitor Fernandes de Sousa
+- José Torres de Araujo Neto
+- Julio Pereira de Oliveira Neto
+- Luiz Matheus Soares Batista Cunha
+- Octavio Alves Freire
+- Ronney Said Bonfim dos Reis
+
 ## Créditos
 
-Grupo 2 — Ciência de Dados, iCEV, 2026.2. A marca da Investe Piauí aparece apenas para identificar a agência parceira do desafio. Fonte dos totais oficiais: Governo do Piauí, "Piauí atrai 120 empreendimentos entre 2023 e 2025 e projeta R$ 44,7 bilhões em investimentos", dez. 2025.
+A marca da Investe Piauí aparece apenas para identificar a agência parceira do desafio. Fonte dos totais oficiais: Governo do Piauí, "Piauí atrai 120 empreendimentos entre 2023 e 2025 e projeta R$ 44,7 bilhões em investimentos", dez. 2025.
