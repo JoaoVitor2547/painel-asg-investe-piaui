@@ -29,7 +29,7 @@ O painel segue a sequência trabalhada em sala: Plano de Governo → Compromisso
 | Editar dados | O que muda nos indicadores se eu incluir, alterar ou excluir um registro? |
 | Qualidade dos dados | Dá para confiar nos números? |
 
-A tela **Editar dados** permite incluir, alterar e excluir registros de 8 tabelas, importar CSV ou JSON e exportar a base. A cada mudança o painel recalcula os 41 indicadores, as notas e os gráficos. As edições ficam salvas só no navegador de quem editou (localStorage); a base publicada não muda.
+A tela **Editar dados** permite incluir, alterar e excluir registros de 8 tabelas e exportar ou importar a base. Também recebe um **arquivo CSV ou JSON** com vários registros: a ferramenta lê o arquivo, confere linha por linha e mostra um laudo com o que pode ser usado e o motivo de cada linha recusada, antes de incluir qualquer coisa. A cada mudança o painel recalcula os 41 indicadores, as notas e os gráficos. As edições ficam salvas só no navegador de quem editou (localStorage); a base publicada não muda.
 
 ## Dados utilizados
 

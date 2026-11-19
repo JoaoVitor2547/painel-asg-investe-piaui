@@ -160,10 +160,16 @@ h += tabela(['Bloco', 'Nome no código', 'Função'], [
     ['4. Catálogo', 'COMP, TEMAS, catalogo(), nota(), recalcular()', f'Lista os compromissos, os temas e os {len(IND)} indicadores; calcula as notas e o Score ASG'],
     ['5. Componentes visuais', 'bars, cols, ring, donut, pilha, linha, dispersao, card', 'Cada função devolve o HTML ou SVG de um gráfico ou de um cartão de indicador'],
     ['6. Telas', 'telas.geral … telas.dados', 'Cada aba é uma função que devolve o HTML da tela'],
-    ['7. Editor', 'ESQ, converter(), validar(), lerCSV()', 'Esquema de cada tabela editável, conversão de tipos, validação e importação'],
+    ['7. Editor', 'ESQ, converter(), validar(), analisar(), laudo()', 'Esquema de cada tabela editável, conversão de tipos, validação e leitura de arquivo com laudo'],
     ['8. Navegação e eventos', 'render() e os ouvintes de evento', 'Troca de aba pelo endereço (#geral, #temas…), filtros, formulário e botões']], [3.3, 5.9, 8.2])
 h += [P('Incluir um indicador novo é acrescentar uma linha em catalogo(): cartões, tabelas, notas e contagens se atualizam sozinhos. Todas as cores são variáveis CSS, com um conjunto para tema claro e outro para tema escuro, e o layout se adapta ao celular.')]
 
+h += [P('Envio de arquivo com conferência', sH3),
+      P('Na aba Editar dados, além do formulário, o usuário pode enviar um arquivo CSV ou JSON com vários registros da tabela escolhida. O arquivo é lido no próprio navegador (API FileReader); nada é enviado a servidor. A função analisar() faz a conferência em quatro passos, sem alterar a base:')]
+h += lista(['<b>Leitura.</b> Identifica se é CSV ou JSON; no CSV, descobre o separador (ponto e vírgula ou vírgula) e respeita aspas.',
+            '<b>Reconhecimento das colunas.</b> Liga cada coluna do arquivo a um campo da tabela, pela chave ou pelo nome do campo, sem diferenciar maiúsculas e acentos. Informa as colunas que faltam e as que a ferramenta não usa.',
+            '<b>Conferência registro a registro.</b> Converte os tipos (número, data, opção de lista) e aplica as mesmas regras do formulário: código obrigatório e não repetido, opção válida, valor não negativo, realizado não maior que o previsto, data no formato AAAA-MM-DD.',
+            '<b>Laudo.</b> A função laudo() mostra quantos registros podem ser usados e, para cada linha recusada, o número da linha e o motivo. Só depois de o usuário confirmar os registros válidos entram na base e tudo é recalculado.'], num=True)
 h += [P('1.6 Score ASG', sH2),
       P('O Score ASG resume em uma nota de 0 a 100 quanto das metas propostas para 2030 já foi alcançado.')]
 h += tabela(['Medida', 'Fórmula'], [
@@ -245,9 +251,10 @@ GUIA = [
    '<b>1. Escolha a tabela:</b> Projetos, Due diligence, Canal de denúncias, Colaboradores, Controles internos, Contratos, Demandas externas ou Consumo da sede.',
    '<b>2. Formulário:</b> preencha os campos e clique em Adicionar registro. O painel recusa código repetido, número negativo, realizado maior que previsto e data fora do formato, e explica o motivo.',
    '<b>3. Registros:</b> cada linha tem os botões Editar e Excluir.',
-   '<b>Importar e exportar:</b> exporta a base em JSON, importa uma base em JSON ou acrescenta linhas de um arquivo CSV.',
+   '<b>Envio de arquivo:</b> logo abaixo do formulário, o botão Escolher arquivo recebe um CSV ou JSON com vários registros da tabela escolhida. A ferramenta lê o arquivo inteiro, confere linha por linha e mostra um laudo: aprovado, aprovado em parte ou recusado, com o motivo de cada linha que não pode ser usada. Nada entra na base até você clicar em Adicionar os registros válidos. O botão Baixar modelo CSV entrega um arquivo com as colunas certas e uma linha de exemplo.',
+   '<b>Importar e exportar:</b> exporta a base inteira em JSON ou substitui a base por um arquivo JSON exportado antes.',
    '<b>Pesos do Score ASG:</b> altere o peso de cada pilar.', '<b>Restaurar base original:</b> apaga as edições e volta ao ponto de partida.'],
-  'Exemplo: escolha Colaboradores, cadastre um colaborador sem treinamento e veja o indicador T1.1 e a nota do tema caírem. As edições ficam salvas só no seu navegador; a base publicada não muda e outras pessoas não veem as suas alterações.'),
+  'Exemplo: escolha Colaboradores, cadastre um colaborador sem treinamento e veja o indicador T1.1 e a nota do tema caírem. Para incluir muitos projetos de uma vez, escolha Projetos, baixe o modelo CSV, preencha no Excel, salve como CSV e envie; o laudo diz o que está pronto para uso. As edições ficam salvas só no seu navegador; a base publicada não muda e outras pessoas não veem as suas alterações.'),
  ('dados', '2.7 Qualidade dos dados', 'Mostra se os números merecem confiança e de onde vem cada dado.',
   [f'<b>{len(TESTES)} testes automáticos,</b> com o valor esperado, o obtido e o resultado (OK ou ERRO).',
    '<b>Contagem dos indicadores</b> por origem: calculados, de demonstração e sem dado.', '<b>De onde vem cada dado:</b> origem de cada tabela hoje e o que falta para virar dado real.'],

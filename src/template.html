@@ -368,7 +368,7 @@ function leitura(){ const por=SETORES.map(s=>[s,sum(D.P.filter(p=>p.s===s),p=>p.
   return `<ul class="alertas">${f.map(x=>`<li><span class="chip ${x[0]==="Destaque"?"calc":x[0]==="Carteira"?"gov":x[0]==="Atenção"?"bad":"demo"}">${x[0]}</span><span>${esc(x[1])}</span></li>`).join("")}</ul>`; }
 
 // --- 6. TELAS (uma funcao por aba) ---
-const UI = {c:"todos", fs:"", ft:"", tab:"P", msg:"", erro:false, edit:null, confirma:false};
+const UI = {c:"todos", fs:"", ft:"", tab:"P", msg:"", erro:false, edit:null, confirma:false, rel:null};
 const telas = {
  geral(){
   const P=D.P, porSt=ST.map((s,i)=>[s,P.filter(p=>p.st===s).length,`var(--c${[3,1,7][i]})`]);
@@ -505,7 +505,7 @@ const telas = {
   const e=ESQ[UI.tab], L=D[UI.tab], reg=UI.edit!=null?L[UI.edit]:{};
   const campo=([k,lab,tp,op])=>{const v=reg[k]??"", id="ed-"+k;
     return `<label class="cp" for="${id}">${lab}${tp==="sel"?`<select id="${id}">${op.map(o=>`<option ${String(v)===o?"selected":""}>${o}</option>`).join("")}</select>`:`<input id="${id}" type="${tp==="num"?"text":tp}" ${tp==="num"?'inputmode="decimal"':""} value="${esc(v)}">`}</label>`};
-  return `<div class="sec"><div><h2>Editar dados</h2><p class="lead">Inclua, altere ou exclua registros. A cada mudança o painel recalcula os ${IND.length} indicadores, as notas e todos os gráficos. As edições ficam salvas só neste navegador; a base publicada não muda.</p></div>
+  return `<div class="sec"><div><h2>Editar dados</h2><p class="lead">Inclua, altere ou exclua registros, um a um ou enviando um arquivo. A cada mudança o painel recalcula os ${IND.length} indicadores, as notas e todos os gráficos. As edições ficam salvas só neste navegador; a base publicada não muda.</p></div>
    <div class="grid g4">
     <div class="panel kpi"><div class="v">${nf(SC.geral)}</div><div class="l">Score ASG agora${UI.antes!=null&&Math.abs(UI.antes-SC.geral)>=.05?` · antes ${nf(UI.antes,1)} → ${nf(SC.geral,1)}`:""}</div></div>
     <div class="panel kpi"><div class="v">${nf(SC.T1)}</div><div class="l">nota do tema T1</div></div>
@@ -517,15 +517,19 @@ const telas = {
   <div class="sec"><h3>2. ${UI.edit!=null?"Alterar registro":"Novo registro"} em ${e.t}</h3>
    <form id="f-ed" class="panel"><div class="form">${e.f.map(campo).join("")}</div>
     <div class="btns" style="margin-top:12px"><button type="submit" class="bt pri">${UI.edit!=null?"Salvar alteração":"Adicionar registro"}</button>${UI.edit!=null?`<button type="button" class="bt" data-acao="cancelar">Cancelar</button>`:""}</div>
-    <p class="msg ${UI.erro?"e":""}" role="status">${esc(UI.msg)}</p></form></div>
+    <p class="msg ${UI.erro?"e":""}" role="status">${esc(UI.msg)}</p></form>
+   <div class="panel"><h3>Ou envie um arquivo de ${e.t}</h3>
+    <p class="nota" style="margin:0 0 10px">Aceita CSV (separado por ponto e vírgula ou vírgula) e JSON. A ferramenta lê o arquivo inteiro, confere linha por linha e mostra o que pode ser usado antes de incluir qualquer coisa.</p>
+    <div class="btns"><label class="bt pri" style="cursor:pointer">Escolher arquivo<input type="file" id="arq" accept=".csv,.json,.txt,text/csv,application/json" hidden></label><button type="button" class="bt" data-acao="modelo">Baixar modelo CSV</button></div>
+    ${UI.rel?laudo(UI.rel):""}</div></div>
   <div class="sec"><h3>3. Registros de ${e.t}</h3>
    <div class="tw alto"><table><thead><tr><th></th>${e.f.map(f=>`<th>${f[1]}</th>`).join("")}</tr></thead><tbody>
    ${L.map((r,i)=>`<tr><td style="white-space:nowrap"><button class="bt mini" data-ed="${i}">Editar</button> <button class="bt mini perigo" data-del="${i}">Excluir</button></td>${e.f.map(f=>`<td>${esc(r[f[0]]??"—")}</td>`).join("")}</tr>`).reverse().join("")||`<tr><td colspan="${e.f.length+1}">Tabela vazia.</td></tr>`}
    </tbody></table></div><p class="nota" style="margin:0">Os registros mais recentes aparecem primeiro.</p></div>
   <div class="grid g2">
    <div class="panel"><h3>Importar e exportar</h3>
-    <div class="btns"><button class="bt" data-acao="exportar">Exportar base (JSON)</button><label class="bt" style="cursor:pointer">Importar base (JSON)<input type="file" id="imp-json" accept=".json,application/json" hidden></label><label class="bt" style="cursor:pointer">Importar CSV em ${e.t}<input type="file" id="imp-csv" accept=".csv,text/csv" hidden></label></div>
-    <p class="nota">O CSV deve ter na primeira linha estes nomes de coluna: <b>${e.f.map(f=>f[0]).join("; ")}</b>. Separador ponto e vírgula ou vírgula. As linhas são acrescentadas à tabela.</p>
+    <div class="btns"><button class="bt" data-acao="exportar">Exportar base (JSON)</button><label class="bt" style="cursor:pointer">Importar base (JSON)<input type="file" id="imp-json" accept=".json,application/json" hidden></label></div>
+    <p class="nota">Exportar gera um arquivo com todas as tabelas e os pesos. Importar substitui a base inteira pela do arquivo.</p>
     <div class="btns" style="margin-top:6px">${UI.confirma?`<button class="bt perigo" data-acao="restaurar-sim">Confirmar: apagar minhas edições</button><button class="bt" data-acao="restaurar-nao">Manter</button>`:`<button class="bt perigo" data-acao="restaurar">Restaurar base original</button>`}</div></div>
    <div class="panel"><h3>Pesos do Score ASG</h3>
     <div class="form">${["amb","soc","gov"].map(k=>`<label class="cp" for="w-${k}">${PIL[k]}<input id="w-${k}" type="number" min="0" max="100" step="5" value="${W[k]}"></label>`).join("")}</div>
@@ -607,13 +611,32 @@ function validar(tab,r,idx){ const e=ESQ[tab], id=r[e.id];
   if(tab==="S"&&!/^\d{4}-\d{2}$/.test(r.m)) return "Mês deve estar no formato AAAA-MM.";
   return null; }
 function aplicar(fn){ UI.antes=SC.geral; fn(); salvar(); recalcular(); }
-function lerCSV(txt,tab){ const e=ESQ[tab], ls=txt.replace(/^﻿/,"").split(/\r?\n/).filter(l=>l.trim()); if(ls.length<2) throw new Error("O arquivo não tem linhas de dados.");
-  const sep=ls[0].includes(";")?";":",", cab=ls[0].split(sep).map(s=>s.trim().replace(/^"|"$/g,"")), novos=[];
-  const falta=e.f.map(f=>f[0]).filter(k=>!cab.includes(k)&&k===e.id); if(falta.length) throw new Error("Falta a coluna "+falta[0]+" na primeira linha.");
-  ls.slice(1).forEach((l,n)=>{ const cel=l.split(sep).map(s=>s.trim().replace(/^"|"$/g,"")), r={};
-    for(const f of e.f){ const i=cab.indexOf(f[0]); const [v,err]=converter(f,i<0?"":cel[i]); if(err) throw new Error(`Linha ${n+2}: ${err}`); r[f[0]]=v; }
-    const err=validar(tab,r,-1)||(novos.some(x=>x[e.id]===r[e.id])?"código repetido no arquivo.":null); if(err) throw new Error(`Linha ${n+2}: ${err}`); novos.push(r); });
-  return novos; }
+// separa uma linha de CSV respeitando aspas
+function partir(l,sep){ const o=[]; let c="",q=false; for(const ch of l){ if(ch==='"'){q=!q;continue} if(ch===sep&&!q){o.push(c.trim());c="";continue} c+=ch } o.push(c.trim()); return o; }
+const semAcento = t => String(t).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+// le um arquivo CSV ou JSON e confere registro por registro, sem alterar a base
+function analisar(txt,nome,tab){ const e=ESQ[tab]; let regs=[], cab=[], json=false; txt=txt.replace(/^\uFEFF/,"");
+  if(/\.json$/i.test(nome)||/^\s*[\[{]/.test(txt)){ json=true; let o=JSON.parse(txt); if(!Array.isArray(o)) o=(o.D&&o.D[tab])||o[tab];
+    if(!Array.isArray(o)) throw new Error("o JSON precisa ser uma lista de registros."); regs=o.map(x=>x&&typeof x==="object"?x:{}); cab=[...new Set(regs.flatMap(x=>Object.keys(x)))]; }
+  else { const ls=txt.split(/\r?\n/).filter(l=>l.trim()); if(ls.length<2) throw new Error("o arquivo precisa ter a linha de cabeçalho e pelo menos uma linha de dados.");
+    const sep=ls[0].split(";").length>=ls[0].split(",").length?";":","; cab=partir(ls[0],sep); regs=ls.slice(1).map(l=>{const c=partir(l,sep); return Object.fromEntries(cab.map((k,i)=>[k,c[i]??""]))}); }
+  if(!regs.length) throw new Error("o arquivo não tem registros.");
+  const mapa={}; for(const f of e.f){ const k=cab.find(c=>semAcento(c)===semAcento(f[0])||semAcento(c)===semAcento(f[1])); if(k!=null) mapa[f[0]]=k; }   // aceita a chave ou o rotulo do campo
+  const usadas=new Set(Object.values(mapa)), ignoradas=cab.filter(c=>!usadas.has(c)), faltam=e.f.filter(f=>!(f[0] in mapa)).map(f=>f[1]);
+  const ok=[], ruins=[], vistos=new Set();
+  regs.forEach((x,i)=>{ const r={}, er=[];
+    for(const f of e.f){ const [v,err]=converter(f, f[0] in mapa ? x[mapa[f[0]]] : ""); if(err) er.push(err); r[f[0]]=v;
+      if(f[2]==="sel"&&!err){ if(v==null&&!f[3].includes("")) er.push(`${f[1]}: obrigatório (${f[3].join(", ")}).`); else if(v!=null&&!f[3].includes(v)) er.push(`${f[1]}: "${v}" não é uma opção válida (${f[3].filter(Boolean).join(", ")}).`); } }
+    if(!er.length){ const ev=validar(tab,r,-1); if(ev) er.push(ev); else if(vistos.has(r[e.id])) er.push("Código repetido dentro do arquivo."); }
+    if(er.length) ruins.push({n:i+(json?1:2), id:r[e.id]||"—", er}); else { vistos.add(r[e.id]); ok.push(r); } });
+  return {tab,nome,ok,ruins,faltam,ignoradas,total:regs.length}; }
+// laudo mostrado depois da leitura do arquivo
+function laudo(a){ const n=a.ok.length, cls=n===a.total?"calc":n?"demo":"bad", tit=n===a.total?"Arquivo aprovado":n?"Aprovado em parte":"Arquivo recusado";
+  return `<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px"><div><span class="chip ${cls}">${tit}</span> <b>${esc(a.nome)}</b>: ${n} de ${a.total} registros podem ser usados em ${ESQ[a.tab].t}${a.ruins.length?`; ${a.ruins.length} com problema`:""}.</div>
+   ${a.faltam.length?`<p class="nota" style="margin:0"><b>Colunas não encontradas</b> (ficam vazias): ${a.faltam.map(esc).join(", ")}.</p>`:""}
+   ${a.ignoradas.length?`<p class="nota" style="margin:0"><b>Colunas do arquivo que a ferramenta não usa:</b> ${a.ignoradas.map(esc).join(", ")}.</p>`:""}
+   ${a.ruins.length?`<div class="tw alto" style="max-height:240px"><table><thead><tr><th>Linha</th><th>Código</th><th>Por que não pode ser usado</th></tr></thead><tbody>${a.ruins.slice(0,100).map(x=>`<tr><td>${x.n}</td><td>${esc(x.id)}</td><td>${x.er.map(esc).join("<br>")}</td></tr>`).join("")}</tbody></table></div>`:""}
+   <div class="btns">${n?`<button type="button" class="bt pri" data-acao="arq-add">Adicionar os ${n} registros válidos</button>`:""}<button type="button" class="bt" data-acao="arq-fora">Descartar arquivo</button></div></div>`; }
 
 // --- 8. NAVEGACAO E EVENTOS ---
 const app=document.getElementById("app");
@@ -625,11 +648,16 @@ function render(manter){
 const aviso=(m,erro=false)=>{UI.msg=m;UI.erro=erro};
 app.addEventListener("click",ev=>{ const b=ev.target.closest("button"); if(!b) return;
   if(b.dataset.c){ UI.c=b.dataset.c; return render(true); }
-  if(b.dataset.tab){ UI.tab=b.dataset.tab; UI.edit=null; aviso(""); return render(true); }
+  if(b.dataset.tab){ UI.tab=b.dataset.tab; UI.edit=null; UI.rel=null; aviso(""); return render(true); }
   if(b.dataset.ed!=null){ UI.edit=Number(b.dataset.ed); aviso("Registro carregado no formulário acima."); render(true); document.getElementById("f-ed")?.scrollIntoView({block:"center"}); return; }
   if(b.dataset.del!=null){ const i=Number(b.dataset.del), id=D[UI.tab][i][ESQ[UI.tab].id]; aplicar(()=>D[UI.tab].splice(i,1)); UI.edit=null; aviso(`Registro ${id} excluído. Indicadores recalculados.`); return render(true); }
   const a=b.dataset.acao; if(!a) return;
   if(a==="cancelar"){ UI.edit=null; aviso(""); return render(true); }
+  if(a==="arq-fora"){ UI.rel=null; aviso(""); return render(true); }
+  if(a==="arq-add"&&UI.rel){ const r=UI.rel; aplicar(()=>D[r.tab].push(...r.ok)); aviso(`${r.ok.length} registros de ${r.nome} adicionados em ${ESQ[r.tab].t}. Indicadores e gráficos recalculados.`); UI.rel=null; return render(true); }
+  if(a==="modelo"){ const e=ESQ[UI.tab], ex=D[UI.tab][0]||{}, txt="\uFEFF"+e.f.map(f=>f[0]).join(";")+"\n"+e.f.map(f=>ex[f[0]]??"").join(";")+"\n";
+    try{ const u=URL.createObjectURL(new Blob([txt],{type:"text/csv"})), l=document.createElement("a"); l.href=u; l.download="modelo_"+UI.tab+".csv"; document.body.append(l); l.click(); l.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000);}catch(err){}
+    aviso("Modelo baixado: a primeira linha traz os nomes das colunas e a segunda, um exemplo."); return render(true); }
   if(a==="restaurar"){ UI.confirma=true; return render(true); }
   if(a==="restaurar-nao"){ UI.confirma=false; return render(true); }
   if(a==="restaurar-sim"){ D=clone(ORIG); W={amb:25,soc:25,gov:50}; EDITADO=false; UI.confirma=false; UI.edit=null; UI.antes=null; try{localStorage.removeItem(CHAVE)}catch(e){} recalcular(); aviso("Base original restaurada."); return render(true); }
@@ -646,12 +674,14 @@ app.addEventListener("submit",ev=>{ if(ev.target.id!=="f-ed") return; ev.prevent
 app.addEventListener("change",ev=>{ const t=ev.target;
   if(t.id==="f-setor"||t.id==="f-status"){ UI.fs=document.getElementById("f-setor").value; UI.ft=document.getElementById("f-status").value; return render(true); }
   if(t.id&&t.id.startsWith("w-")){ const v=Math.max(0,Math.min(100,Number(t.value)||0)); aplicar(()=>{W[t.id.slice(2)]=v}); return render(true); }
-  if((t.id==="imp-json"||t.id==="imp-csv")&&t.files[0]){ const fr=new FileReader(), csv=t.id==="imp-csv";
-    fr.onload=()=>{ try{ if(csv){ const novos=lerCSV(String(fr.result),UI.tab); aplicar(()=>D[UI.tab].push(...novos)); aviso(`${novos.length} registros importados para ${ESQ[UI.tab].t}.`); }
-        else { const o=JSON.parse(String(fr.result)), d=o.D||o; if(!Object.keys(ORIG).every(k=>Array.isArray(d[k]))) throw new Error("O arquivo não tem todas as tabelas do painel."); aplicar(()=>{D=d; if(o.W) W=o.W}); aviso("Base importada."); }
-      }catch(e){ aviso("Importação recusada: "+e.message,true); } UI.edit=null; render(true); };
+  if(t.id==="arq"&&t.files[0]){ const arq=t.files[0], fr=new FileReader();
+    fr.onload=()=>{ try{ UI.rel=analisar(String(fr.result),arq.name,UI.tab); aviso(""); }catch(e){ UI.rel=null; aviso("Não foi possível ler "+arq.name+": "+e.message,true); } UI.edit=null; render(true); };
+    fr.readAsText(arq); }
+  if(t.id==="imp-json"&&t.files[0]){ const fr=new FileReader();
+    fr.onload=()=>{ try{ const o=JSON.parse(String(fr.result)), d=o.D||o; if(!Object.keys(ORIG).every(k=>Array.isArray(d[k]))) throw new Error("O arquivo não tem todas as tabelas do painel."); aplicar(()=>{D=d; if(o.W) W=o.W}); aviso("Base importada."); }
+      catch(e){ aviso("Importação recusada: "+e.message,true); } UI.edit=null; UI.rel=null; render(true); };
     fr.readAsText(t.files[0]); }
 });
-addEventListener("hashchange",()=>{UI.edit=null;aviso("");render();scrollTo(0,0)});
+addEventListener("hashchange",()=>{UI.edit=null;UI.rel=null;aviso("");render();scrollTo(0,0)});
 render();
 </script>
